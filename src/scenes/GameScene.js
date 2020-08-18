@@ -15,6 +15,11 @@ export default class GameScene extends Phaser.Scene {
     super('game-scene')
   }
 
+  init() {
+    this.playerSpeed = 150;
+    this.jumpSpeed = -600;
+  };
+
   preload() {
     this.load.image('sky', 'assets/images/sky.png');
     this.load.image('mountain', 'assets/images/mountain.png');
