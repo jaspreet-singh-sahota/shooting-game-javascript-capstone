@@ -92,11 +92,33 @@ export default class ParallaxScene extends Phaser.Scene {
     this.player.body.setCollideWorldBounds(true);
     this.cameras.main.startFollow(this.player);
     
-    this.stars = this.physics.add.group({
+    function randomInteger(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    console.log(randomInteger(0.45, 0.7))
+
+    this.coin = this.physics.add.staticGroup({
       key: 'star',
-      repeat: 5,
-      setXY: { x: width * 0.5, y: width * 0.5, stepX: 70 }
-    });
+      repeat: 100,
+      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 1000 },
+      setScale: { x: 0.5, y: 0.5 }
+    })
+
+    this.coin1 = this.physics.add.staticGroup({
+      key: 'star',
+      repeat: 100,
+      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 300 },
+      setScale: { x: 0.5, y: 0.5 }
+    })
+
+    this.coin2 = this.physics.add.staticGroup({
+      key: 'star',
+      repeat: 100,
+      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 300 },
+      setScale: { x: 0.5, y: 0.5 }
+    }) 
+
 
     this.flower2 = backgroundRepeat(this, width / 2.5, height / 1.3, 'flower2', 0.75, 0.4, 0.4)
     this.ground2 = backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
