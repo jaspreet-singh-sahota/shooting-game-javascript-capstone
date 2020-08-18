@@ -15,12 +15,14 @@ const backgroundRepeat = (scene, w, h, text, speed, s1, s2, o1, o2, player) => {
 function collectStar(player, star) {
   star.disableBody(true, true);
   var score = 0;
-  let scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
   score += 10;
   scoreText.setText('Score: ' + score);
 
 }
+
+var score = 0;
+var scoreText
 
 export default class ParallaxScene extends Phaser.Scene {
   constructor() {
@@ -158,6 +160,7 @@ export default class ParallaxScene extends Phaser.Scene {
       });
     }
 
+    let scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     this.physics.add.collider(this.player, this.ground2, this.ground);
     this.physics.add.overlap(this.player, this.stars, collectStar, null, this)
 
