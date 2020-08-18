@@ -1,3 +1,16 @@
+class Laser extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'playerAttack', 30);
+  }
+
+  fire(x, y) {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
+    this.setVelocityX(900);
+  }
+}
+
 const backgroundRepeat = (scene, w, h, text, speed, s1, s2, o1, o2, player) => {
   const count = 101 * speed
   let screenWidth = 0;
