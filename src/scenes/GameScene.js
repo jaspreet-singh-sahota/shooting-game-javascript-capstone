@@ -101,6 +101,15 @@ export default class ParallaxScene extends Phaser.Scene {
     const speed = 10
     const cam = this.cameras.main
 
+    if (this.cursors.left.isDown) {
+      console.log(this.player)
+      this.player.setVelocityX(130);
+      cam.scrollX -= speed
+    }
+    else if (this.cursors.right.isDown) {
+      cam.scrollX += speed
+
+    }
   }
 
 }
