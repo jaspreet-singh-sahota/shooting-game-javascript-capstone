@@ -7,7 +7,7 @@ class Laser extends Phaser.Physics.Arcade.Sprite {
     this.body.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
-    this.setVelocityX(900);
+    this.setVelocityX(700);
   }
 }
 
@@ -16,7 +16,7 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 30,
+      frameQuantity: 20,
       key: 'playerAttack',
       active: false,
       visible: false,
@@ -31,42 +31,17 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
       laser.fire(x, y);
     }
   }
-
-}
-
-const backgroundRepeat = (scene, w, h, text, speed, s1, s2, o1, o2, player) => {
-  const count = 101 * speed
-  let screenWidth = 0;
-  const platforms = scene.physics.add.staticGroup();
-
-  for (let i = 0; i < count; i++) {
-    const repeatImage = platforms.create((w + screenWidth), h, text).setOrigin(o1, o2).setScrollFactor(speed).setScale(s1, s2)
-    screenWidth += scene.scale.width
-    if (text === "ground2") {
-      scene.physics.add.collider(player, repeatImage);
-    }
-  }
-}
-
-function collectStar(player, star) {
-  star.disableBody(true, true);
-  var score = 0;
-
-  score += 10;
-  scoreText.setText('Score: ' + score);
-
 }
 
 var score = 0;
-var scoreText
-
-export default class ParallaxScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
   constructor() {
-    super('parallax-scene')
+    super('Game-scene')
+    this.laserGroup;
   }
 
   init() {
-    this.playerSpeed = 150;
+    this.playerSpeed = 250;
     this.jumpSpeed = -600;
   };
 
@@ -95,18 +70,11 @@ export default class ParallaxScene extends Phaser.Scene {
       spacing: 2,
     });
 
-    this.load.spritesheet('star', 'assets/images/star.png', {
-      frameWidth: 63,
-      frameHeight: 62,
-      margin: 5,
-      spacing: 2,
-    });
-
-    this.load.spritesheet('enemyAttack', 'assets/images/enemy.png', {
-      frameWidth: 125,
-      frameHeight: 110.33,
-      margin: 0,
-      spacing: 0,
+    this.load.spritesheet('playerAttack', 'assets/images/playerAttack.png', {
+      frameWidth: 50,
+      frameHeight: 50,
+      margin: 15,
+      spacing: 5,
     });
 
     this.load.spritesheet('enemy', 'assets/images/enemy.png', {
@@ -116,44 +84,42 @@ export default class ParallaxScene extends Phaser.Scene {
       spacing: 0,
     });
 
-    this.load.spritesheet('playerAttack', 'assets/images/playerAttack.png', {
-      frameWidth: 50,
-      frameHeight: 50,
-      margin: 15,
-      spacing: 5,
+    this.load.spritesheet('enemyAttack', 'assets/images/enemy.png', {
+      frameWidth: 65,
+      frameHeight: 110.33,
+      margin: -10,
+      spacing: 12,
+    });
+
+    this.load.spritesheet('star', 'assets/images/star.png', {
+      frameWidth: 70,
+      frameHeight: 69,
+      margin: 0,
+      spacing: 0,
     });
   }
 
-  setupSpawner() {
-    this.enemyAttack = this.physics.add.group({
-      allowGravity: false,
-      immovable: true
-    });
+  backgroundRepeat(scene, w, h, text, speed, s1, s2, o1, o2, player) {
+    const count = 101 * speed
+    let screenWidth = 0;
+    const platforms = scene.physics.add.staticGroup();
 
-    let spawningAttacks = this.time.addEvent({
-      delay: 3000,
-      loop: true,
-      callbackScope: this,
-      callback: function () {
-        this.backgroundRepeat(this, 500, 1000, 'ground2', 1.25, 1, 1, 0, 1, this.enemyAttack)
-        let attack = this.enemyAttack.create(this.width * 0.9, 1000 * 0.44, 'enemyAttack', 17);
-        attack.flipX = true
+    for (let i = 0; i < count; i++) {
+      let repeatImage = platforms.create((w + screenWidth), h, text).setOrigin(o1, o2).setScrollFactor(speed).setScale(s1, s2)
 
-        // set properties
-        attack.setVelocityX(-300);
-
-        // lifespan
-        this.time.addEvent({
-          delay: 1800,
-          repeat: 0,
-          callbackScope: this,
-          callback: function () {
-            attack.destroy();
-          }
-        });
+      if (text === "ground2") {
+        scene.physics.add.collider(player, repeatImage);
       }
-    });
-  };
+      screenWidth += scene.scale.width
+    }
+  }
+
+  collectStar(player, star) {
+    star.disableBody(true, true);
+
+    score += 10;
+    this.scoreText.setText('Score: ' + score);
+  }
 
   disableEnemyAttack(player, enemy) {
     enemy.setActive(false)
@@ -162,60 +128,52 @@ export default class ParallaxScene extends Phaser.Scene {
     player.destroy()
   }
 
-  create() {
-    const height = this.scale.height
-    const width = this.scale.width
+  gameOver() {
+    console.log('gameover')
+  }
 
-    this.add.image(width * 0.5, height * 0.3, 'sky')
+  create() {
+    this.height = this.scale.height
+    this.width = this.scale.width
+    this.timer = true
+
+    this.add.image(this.width * 0.5, this.height * 0.3, 'sky')
       .setScrollFactor(0).setScale(0.8, 0.7)
 
-    this.cloud1 = backgroundRepeat(this, 0, height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
-    this.mountain = backgroundRepeat(this, 0, height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
-    this.cloud2 = backgroundRepeat(this, width / 2, height * 0.5, 'cloud2', 0.15, 0.5, 0.5, 0, 1)
-    this.grass2 = backgroundRepeat(this, width / 2.4, height / 1.5, 'grass2', 0.5, 0.4, 0.4)
-    this.grass1 = backgroundRepeat(this, width / 7.5, height / 1.5, 'grass3', 0.5, 0.4, 0.4)
-    this.grass3 = backgroundRepeat(this, width / 1.3, height / 1.5, 'grass1', 0.5, 0.4, 0.4)
-    this.ground = backgroundRepeat(this, 0, height / 1.1, 'ground', 0.75, 0.5, 0.5, 0, 1)
+    this.cloud1 = this.backgroundRepeat(this, 0, this.height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
+    this.mountain = this.backgroundRepeat(this, 0, this.height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
+    this.cloud2 = this.backgroundRepeat(this, this.width / 2, this.height * 0.5, 'cloud2', 0.15, 0.5, 0.5, 0, 1)
+    this.grass2 = this.backgroundRepeat(this, this.width / 2.4, this.height / 1.5, 'grass2', 0.5, 0.4, 0.4)
+    this.grass1 = this.backgroundRepeat(this, this.width / 7.5, this.height / 1.5, 'grass3', 0.5, 0.4, 0.4)
+    this.grass3 = this.backgroundRepeat(this, this.width / 1.3, this.height / 1.5, 'grass1', 0.5, 0.4, 0.4)
+    this.ground = this.backgroundRepeat(this, 0, this.height / 1.1, 'ground', 0.75, 0.5, 0.5, 0, 1)
 
-    this.tree1 = backgroundRepeat(this, width / 5, height / 1.8, 'tree', 0.75, 0.5, 0.5)
-    this.tree2 = backgroundRepeat(this, width / 1.3, height / 1.6, 'tree', 0.75, 0.35, 0.35)
-    this.rock1 = backgroundRepeat(this, width / 1.8, height / 1.3, 'rock2', 0.75, 0.4, 0.4)
-    this.rock2 = backgroundRepeat(this, width / 3.5, height / 1.3, 'rock3', 0.75, 0.4, 0.4)
-    this.rock3 = backgroundRepeat(this, width / 1.1, height / 1.3, 'rock1', 0.75, 0.4, 0.4)
-    this.flower1 = backgroundRepeat(this, width / 1.7, height / 1.2, 'flower1', 0.75, 0.4, 0.4)
-    this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.playerAttack)
+    this.tree1 = this.backgroundRepeat(this, this.width / 5, this.height / 1.8, 'tree', 0.75, 0.5, 0.5)
+    this.tree2 = this.backgroundRepeat(this, this.width / 1.3, this.height / 1.6, 'tree', 0.75, 0.35, 0.35)
+    this.rock1 = this.backgroundRepeat(this, this.width / 1.8, this.height / 1.3, 'rock2', 0.75, 0.4, 0.4)
+    this.rock2 = this.backgroundRepeat(this, this.width / 3.5, this.height / 1.3, 'rock3', 0.75, 0.4, 0.4)
+    this.rock3 = this.backgroundRepeat(this, this.width / 1.1, this.height / 1.3, 'rock1', 0.75, 0.4, 0.4)
+    this.flower2 = this.backgroundRepeat(this, this.width / 2.5, this.height / 1.3, 'flower2', 0.75, 0.4, 0.4)
+    this.player = this.physics.add.sprite(this.width * 0.1, this.height * 0.4, 'player', 3).setScale(1.3, 1.3);
+    this.player.setBounce(0.2);
+    this.flower1 = this.backgroundRepeat(this, this.width / 1.7, this.height / 1.2, 'flower1', 0.75, 0.4, 0.4)
 
-    this.player = this.add.sprite(1000 * 0.1, 700 * 0.45, 'player', 3).setScale(1.5, 1.5)
-    this.playerAttack = this.physics.add.sprite(this.width * 0.15, this.height * 0.4, 'playerAttack', 30).setScale(1, 1);
-    this.physics.add.existing(this.player);
-    this.player.body.setCollideWorldBounds(true);
-    this.cameras.main.startFollow(this.player);
-    
     function randomInteger(min, max) {
       return Math.random() * (max - min) + min;
     }
 
-    console.log(randomInteger(0.45, 0.7))
-
     this.coins = []
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       this.coins.push(this.physics.add.staticGroup({
         key: 'star',
         repeat: 100,
-        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: 1000 },
+        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: randomInteger(100, 1000) },
         setScale: { x: 0.5, y: 0.5 }
       }))
     }
 
-    console.log(this.coins.length)
-
-    for (let i = 0; i < this.coins.length; i++) {
-      Phaser.Actions.Call(this.coins[i].getChildren(), child => {
-        child.anims.play('spin');
-      });
-    }
-    
+    this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
     let enemySpawnPosition = 0
     for (let i = 0; i < 34; i++) {
       this.enemy = this.physics.add.sprite(enemySpawnPosition + this.width * 0.9, this.height * 0.4, 'enemy', 10).setScale(1.3, 1.3)
@@ -226,18 +184,11 @@ export default class ParallaxScene extends Phaser.Scene {
 
     }
 
-    this.backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
-
-    this.flower2 = backgroundRepeat(this, width / 2.5, height / 1.3, 'flower2', 0.75, 0.4, 0.4)
-    this.ground2 = backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
-    // this.physics.add.overlap(this.player, [this.ground2], null, this);
-
     if (!this.anims.get('walking')) {
-      // walking animation
       this.anims.create({
         key: 'walking',
         frames: this.anims.generateFrameNames('player', {
-          frames: [30, 31, 32, 33, 34, 35]
+          frames: [30, 31, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35]
         }),
         frameRate: 12,
         yoyo: true,
@@ -245,14 +196,13 @@ export default class ParallaxScene extends Phaser.Scene {
       });
     }
 
-    if (!this.anims.get('star')) {
+    if (!this.anims.get('spin')) {
       this.anims.create({
-        key: 'star',
+        key: 'spin',
         frames: this.anims.generateFrameNames('star', {
-          frames: [30, 31, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35]
+          frames: [0, 1, 2, 3, 4, 5, 6, 7]
         }),
-        frameRate: 12,
-        yoyo: true,
+        frameRate: 5,
         repeat: -1
       });
     }
@@ -269,21 +219,75 @@ export default class ParallaxScene extends Phaser.Scene {
     }
 
     this.enemy.anims.play('enemy')
-    this.setupSpawner()
 
-    this.physics.add.overlap(this.player, [this.enemy, this.enemyAttack], this.gameOver, null, this)
-    this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
+    for (let i = 0; i < this.coins.length; i++) {
+      Phaser.Actions.Call(this.coins[i].getChildren(), child => {
+        child.anims.play('spin');
+      });
+    }
+
+    this.enemyAttack()
+    this.laserGroup = new LaserGroup(this);
+
+    Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
+      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, child)
+      this.physics.add.overlap(child, [this.enemy, this.enemyAttack], this.disableEnemyAttack, null, this)
+    });
 
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-    this.physics.add.collider(this.player, this.ground2, this.ground);
-    this.physics.add.overlap(this.player, this.stars, collectStar, null, this)
-
+    this.physics.add.collider(this.player, this.ground2, this.ground, this.enemyAttack);
+    this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
+    this.physics.add.overlap(this.player, [this.enemy, this.enemyAttack], this.gameOver, null, this)
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.cameras.main.setBounds(0, 0, width * 100, height)
+
+    this.cameras.main.setBounds(0, 0, this.width * 100, this.height)
+    this.cameras.main.startFollow(this.player);
   }
 
-  fireBullet() {
-    this.laserGroup.fireBullet(this.player.x + 20, this.player.y);
+  enemyAttack() {
+    this.enemyAttack = this.physics.add.group({
+      allowGravity: false,
+      immovable: true
+    });
+
+    let spawningAttacks = this.time.addEvent({
+      delay: 3000,
+      loop: true,
+      callbackScope: this,
+      callback: function () {
+        if (this.enemy.visible === true) {
+          let attack = this.enemyAttack.create(this.width * 0.9, 1000 * 0.44, 'enemyAttack', 17);
+          attack.flipX = true
+          attack.setVelocityX(-300);
+          this.time.addEvent({
+            delay: 1800,
+            repeat: 0,
+            callbackScope: this,
+            callback: function () {
+              attack.destroy();
+            }
+          });
+        }
+      }
+    });
+  };
+
+  attackInterval() {
+    this.timer = false
+    this.time.addEvent({
+      delay: 10,
+      repeat: 0,
+      callbackScope: this,
+      callback: function () {
+        Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
+          child.active = false
+          child.a
+        });
+      }
+    });
+    setTimeout(() => {
+      this.timer = true
+    }, 950);
   }
 
   update() {
@@ -291,19 +295,16 @@ export default class ParallaxScene extends Phaser.Scene {
 
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-this.playerSpeed);
-      this.playerAttack.setVelocityX(-this.playerSpeed);
       this.player.flipX = true;
       if (onGround && !this.player.anims.isPlaying)
         this.player.anims.play('walking');
     } else if (this.cursors.right.isDown) {
       this.player.setVelocityX(this.playerSpeed);
-      this.playerAttack.setVelocityX(this.playerSpeed);
       this.player.flipX = false;
       if (onGround && !this.player.anims.isPlaying)
         this.player.anims.play('walking');
     } else {
       this.player.body.setVelocityX(0);
-      this.playerAttack.body.setVelocityX(0);
       if (onGround)
         this.player.setFrame(10);
     }
@@ -315,42 +316,21 @@ export default class ParallaxScene extends Phaser.Scene {
     }
 
     this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
-    if (this.keyX.isDown && this.player.flipX === true) {
-      this.laserGroup.fireBullet(this.player.x - 50, this.player.y + 10);
-      this.laserGroup.setVelocityX(-900)
-      this.time.addEvent({
-        delay: 10,
-        repeat: 0,
-        callbackScope: this,
-        callback: function () {
-          Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
-            child.active = false
-          });
-        }
-      });
-    }
 
-    if (this.keyX.isDown && this.player.flipX !== true) {
-      console.log(this.timer)
+    if (this.keyX.isDown && this.player.flipX === true) {
       if (this.timer) {
-        this.timer = false
-        this.laserGroup.fireBullet(this.player.x + 50, this.player.y + 10);
-        this.time.addEvent({
-          delay: 10,
-          repeat: 0,
-          callbackScope: this,
-          callback: function () {
-            Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
-              child.active = false
-            });
-          }
-        });
-        setTimeout(() => {
-          this.timer = true
-        }, 1000);
+        this.laserGroup.fireBullet(this.player.x - 50, this.player.y + 10);
+        this.laserGroup.setVelocityX(-700)
+        this.attackInterval()
       }
     }
 
+    if (this.keyX.isDown && this.player.flipX !== true) {
+      if (this.timer) {
+        this.laserGroup.fireBullet(this.player.x + 50, this.player.y + 10);
+        this.attackInterval()
+      }
+    }
   }
 
 }
