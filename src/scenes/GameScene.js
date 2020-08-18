@@ -102,15 +102,18 @@ export default class ParallaxScene extends Phaser.Scene {
     const speed = 10
     const cam = this.cameras.main
 
+    let onGround = this.player.body.blocked.down || this.player.body.touching.down;
+
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-this.playerSpeed);
       this.player.flipX = true;
-      this.player.anims.play('walking');
+      if (onGround && !this.player.anims.isPlaying)
+        this.player.anims.play('walking');
     } else if (this.cursors.right.isDown) {
       this.player.setVelocityX(this.playerSpeed);
       this.player.flipX = false;
-      // if (onGround && !this.player.anims.isPlaying)
-      this.player.anims.play('walking');
+      if (onGround && !this.player.anims.isPlaying)
+        this.player.anims.play('walking');
     } else {
       this.player.body.setVelocityX(0);
       this.player.setFrame(10);
