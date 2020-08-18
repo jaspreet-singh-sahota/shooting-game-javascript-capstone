@@ -155,6 +155,12 @@ export default class ParallaxScene extends Phaser.Scene {
     });
   };
 
+  disableEnemyAttack(player, enemy) {
+    enemy.setActive(false)
+    enemy.disableBody(true, true);
+    enemy.setVisible(false)
+    player.destroy()
+  }
 
   create() {
     const height = this.scale.height
@@ -257,6 +263,9 @@ export default class ParallaxScene extends Phaser.Scene {
 
     this.enemy.anims.play('enemy')
     this.setupSpawner()
+
+    this.physics.add.overlap(this.player, [this.enemy, this.enemyAttack], this.gameOver, null, this)
+    this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
 
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     this.physics.add.collider(this.player, this.ground2, this.ground);
