@@ -11,6 +11,21 @@ class Laser extends Phaser.Physics.Arcade.Sprite {
   }
 }
 
+class LaserGroup extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+      frameQuantity: 30,
+      key: 'playerAttack',
+      active: false,
+      visible: false,
+      classType: Laser
+    });
+  }
+
+}
+
 const backgroundRepeat = (scene, w, h, text, speed, s1, s2, o1, o2, player) => {
   const count = 101 * speed
   let screenWidth = 0;
