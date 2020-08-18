@@ -278,6 +278,10 @@ export default class ParallaxScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, width * 100, height)
   }
 
+  fireBullet() {
+    this.laserGroup.fireBullet(this.player.x + 20, this.player.y);
+  }
+
   update() {
     let onGround = this.player.body.blocked.down || this.player.body.touching.down;
 
@@ -304,6 +308,11 @@ export default class ParallaxScene extends Phaser.Scene {
       this.player.anims.stop('walking');
       this.player.body.setVelocityY(-400);
       this.player.setFrame(42);
+    }
+
+    this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+    if (this.keyX.isDown && this.player.flipX === true) {
+      this.fireBullet();
     }
 
   }
