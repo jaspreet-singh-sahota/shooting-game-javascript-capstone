@@ -81,6 +81,38 @@ export default class ParallaxScene extends Phaser.Scene {
     });
   }
 
+  setupSpawner() {
+    this.enemyAttack = this.physics.add.group({
+      allowGravity: false,
+      immovable: true
+    });
+
+    let spawningAttacks = this.time.addEvent({
+      delay: 3000,
+      loop: true,
+      callbackScope: this,
+      callback: function () {
+        this.backgroundRepeat(this, 500, 1000, 'ground2', 1.25, 1, 1, 0, 1, this.enemyAttack)
+        let attack = this.enemyAttack.create(this.width * 0.9, 1000 * 0.44, 'enemyAttack', 10);
+        attack.flipX = true
+
+        // set properties
+        attack.setVelocityX(-300);
+
+        // lifespan
+        this.time.addEvent({
+          delay: 1800,
+          repeat: 0,
+          callbackScope: this,
+          callback: function () {
+            attack.destroy();
+          }
+        });
+      }
+    });
+  };
+
+
   create() {
     const height = this.scale.height
     const width = this.scale.width
@@ -191,6 +223,7 @@ export default class ParallaxScene extends Phaser.Scene {
     }
 
     this.enemy.anims.play('enemy')
+    this.setupSpawner()
 
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     this.physics.add.collider(this.player, this.ground2, this.ground);
