@@ -172,6 +172,19 @@ export default class ParallaxScene extends Phaser.Scene {
       });
     }
 
+    if (!this.anims.get('enemy')) {
+      this.anims.create({
+        key: 'enemy',
+        frames: this.anims.generateFrameNames('enemy', {
+          frames: [8, 9, 10]
+        }),
+        frameRate: 2,
+        repeat: -1
+      });
+    }
+
+    this.enemy.anims.play('enemy')
+
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     this.physics.add.collider(this.player, this.ground2, this.ground);
     this.physics.add.overlap(this.player, this.stars, collectStar, null, this)
