@@ -79,6 +79,13 @@ export default class ParallaxScene extends Phaser.Scene {
       margin: 0,
       spacing: 0,
     });
+
+    this.load.spritesheet('playerAttack', 'assets/images/playerAttack.png', {
+      frameWidth: 50,
+      frameHeight: 50,
+      margin: 15,
+      spacing: 5,
+    });
   }
 
   setupSpawner() {
