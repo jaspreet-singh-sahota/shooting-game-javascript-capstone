@@ -312,7 +312,39 @@ export default class ParallaxScene extends Phaser.Scene {
 
     this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
     if (this.keyX.isDown && this.player.flipX === true) {
-      this.fireBullet();
+      this.laserGroup.fireBullet(this.player.x - 50, this.player.y + 10);
+      this.laserGroup.setVelocityX(-900)
+      this.time.addEvent({
+        delay: 10,
+        repeat: 0,
+        callbackScope: this,
+        callback: function () {
+          Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
+            child.active = false
+          });
+        }
+      });
+    }
+
+    if (this.keyX.isDown && this.player.flipX !== true) {
+      console.log(this.timer)
+      if (this.timer) {
+        this.timer = false
+        this.laserGroup.fireBullet(this.player.x + 50, this.player.y + 10);
+        this.time.addEvent({
+          delay: 10,
+          repeat: 0,
+          callbackScope: this,
+          callback: function () {
+            Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
+              child.active = false
+            });
+          }
+        });
+        setTimeout(() => {
+          this.timer = true
+        }, 1000);
+      }
     }
 
   }
