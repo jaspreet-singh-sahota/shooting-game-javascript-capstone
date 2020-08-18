@@ -105,6 +105,18 @@ export default class ParallaxScene extends Phaser.Scene {
       });
     }
 
+    if (!this.anims.get('star')) {
+      this.anims.create({
+        key: 'star',
+        frames: this.anims.generateFrameNames('star', {
+          frames: [30, 31, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35, 32, 33, 34, 35]
+        }),
+        frameRate: 12,
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cameras.main.setBounds(0, 0, width * 100, height)
   }
