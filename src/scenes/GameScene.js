@@ -119,6 +119,12 @@ export default class ParallaxScene extends Phaser.Scene {
       this.player.setFrame(10);
     }
 
+    if (onGround && (this.cursors.space.isDown || this.cursors.up.isDown)) {
+      this.player.body.setVelocityY(-400);
+      this.player.anims.stop('walking');
+      this.player.setFrame(42);
+    }
+
   }
 
 }
