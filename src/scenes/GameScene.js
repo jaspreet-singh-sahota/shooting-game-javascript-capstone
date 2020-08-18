@@ -141,8 +141,10 @@ export default class ParallaxScene extends Phaser.Scene {
     this.rock2 = backgroundRepeat(this, width / 3.5, height / 1.3, 'rock3', 0.75, 0.4, 0.4)
     this.rock3 = backgroundRepeat(this, width / 1.1, height / 1.3, 'rock1', 0.75, 0.4, 0.4)
     this.flower1 = backgroundRepeat(this, width / 1.7, height / 1.2, 'flower1', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.playerAttack)
 
     this.player = this.add.sprite(1000 * 0.1, 700 * 0.45, 'player', 3).setScale(1.5, 1.5)
+    this.playerAttack = this.physics.add.sprite(this.width * 0.15, this.height * 0.4, 'playerAttack', 30).setScale(1, 1);
     this.physics.add.existing(this.player);
     this.player.body.setCollideWorldBounds(true);
     this.cameras.main.startFollow(this.player);
