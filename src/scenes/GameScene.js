@@ -24,6 +24,14 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
     });
   }
 
+  fireBullet(x, y) {
+    const laser = this.getFirstDead(false);
+
+    if (laser) {
+      laser.fire(x, y);
+    }
+  }
+
 }
 
 const backgroundRepeat = (scene, w, h, text, speed, s1, s2, o1, o2, player) => {
