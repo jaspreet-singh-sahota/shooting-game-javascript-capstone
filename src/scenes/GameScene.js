@@ -20,6 +20,15 @@ export default class GameScene extends Phaser.Scene {
 
   }
 
+  backgroundRepeat(scene, w, h, count, text, speed, o1, o2, s1, s2) {
+    let x = 0;
+
+    for (let i = 0; i < count; i++) {
+      scene.add.image(w + x, h, text).setOrigin(o1, o2).setScrollFactor(speed).setScale(s1, s2)
+      x += scene.scale.width
+    }
+  }
+
   create() {
     const height = this.scale.height
     const width = this.scale.width
