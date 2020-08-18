@@ -191,36 +191,24 @@ export default class ParallaxScene extends Phaser.Scene {
 
     console.log(randomInteger(0.45, 0.7))
 
-    this.coin = this.physics.add.staticGroup({
-      key: 'star',
-      repeat: 100,
-      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 1000 },
-      setScale: { x: 0.5, y: 0.5 }
-    })
+    this.coins = []
 
-    this.coin1 = this.physics.add.staticGroup({
-      key: 'star',
-      repeat: 100,
-      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 300 },
-      setScale: { x: 0.5, y: 0.5 }
-    })
+    for (let i = 0; i < 5; i++) {
+      this.coins.push(this.physics.add.staticGroup({
+        key: 'star',
+        repeat: 100,
+        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: 1000 },
+        setScale: { x: 0.5, y: 0.5 }
+      }))
+    }
 
-    this.coin2 = this.physics.add.staticGroup({
-      key: 'star',
-      repeat: 100,
-      setXY: { x: width * Math.random(1), y: height * randomInteger(0.5, 0.8), stepX: 300 },
-      setScale: { x: 0.5, y: 0.5 }
-    }) 
+    console.log(this.coins.length)
 
-    Phaser.Actions.Call(this.coin.getChildren(), child => {
-      child.anims.play('spin');
-    });
-    Phaser.Actions.Call(this.coin1.getChildren(), child => {
-      child.anims.play('spin');
-    });
-    Phaser.Actions.Call(this.coin2.getChildren(), child => {
-      child.anims.play('spin');
-    })
+    for (let i = 0; i < this.coins.length; i++) {
+      Phaser.Actions.Call(this.coins[i].getChildren(), child => {
+        child.anims.play('spin');
+      });
+    }
     
     this.enemy = this.physics.add.sprite(width * 0.9, height * 0.4, 'enemy', 10).setScale(1.3, 1.3)
     this, this.enemy.flipX = true;
