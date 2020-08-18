@@ -46,6 +46,13 @@ export default class ParallaxScene extends Phaser.Scene {
       margin: 2,
       spacing: 2,
     });
+
+    this.load.spritesheet('star', 'assets/images/star.png', {
+      frameWidth: 63,
+      frameHeight: 62,
+      margin: 5,
+      spacing: 2,
+    });
   }
 
   create() {
