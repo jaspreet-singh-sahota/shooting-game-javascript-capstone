@@ -59,6 +59,19 @@ export default class GameScene extends Phaser.Scene {
     this.flower2 = backgroundRepeat(this, width / 2.5, height / 1.3, 'flower2', 0.75, 0.4, 0.4)
     this.ground2 = backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1)
 
+    if (!this.anims.get('walking')) {
+      // walking animation
+      this.anims.create({
+        key: 'walking',
+        frames: this.anims.generateFrameNames('player', {
+          frames: [30, 31, 32, 33, 34, 35]
+        }),
+        frameRate: 12,
+        yoyo: true,
+        repeat: -1
+      });
+    }
+
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cameras.main.setBounds(0, 0, width * 100, height)
   }
