@@ -65,6 +65,13 @@ export default class ParallaxScene extends Phaser.Scene {
       margin: 5,
       spacing: 2,
     });
+
+    this.load.spritesheet('enemy', 'assets/images/enemy.png', {
+      frameWidth: 125,
+      frameHeight: 110.33,
+      margin: 0,
+      spacing: 0,
+    });
   }
 
   create() {
