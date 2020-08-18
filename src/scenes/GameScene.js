@@ -64,6 +64,18 @@ export default class GameScene extends Phaser.Scene {
 
     this.ground2 = this.add.image(0, height, 'ground2').setOrigin(0, 1)
     this.ground2.setScale(0.45, 0.45)
+    
+  }
+
+  update() {
+    
+    if (this.cursors.left.isDown) {
+      cam.scrollX -= speed
+    }
+    else if (this.cursors.right.isDown) {
+      cam.scrollX += speed
+    }
   }
 
 }
+
