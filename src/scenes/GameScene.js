@@ -99,9 +99,6 @@ export default class ParallaxScene extends Phaser.Scene {
   }
 
   update() {
-    const speed = 10
-    const cam = this.cameras.main
-
     let onGround = this.player.body.blocked.down || this.player.body.touching.down;
 
     if (this.cursors.left.isDown) {
