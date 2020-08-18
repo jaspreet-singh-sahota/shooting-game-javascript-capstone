@@ -216,10 +216,17 @@ export default class ParallaxScene extends Phaser.Scene {
       });
     }
     
-    this.enemy = this.physics.add.sprite(width * 0.9, height * 0.4, 'enemy', 10).setScale(1.3, 1.3)
-    this, this.enemy.flipX = true;
+    let enemySpawnPosition = 0
+    for (let i = 0; i < 34; i++) {
+      this.enemy = this.physics.add.sprite(enemySpawnPosition + this.width * 0.9, this.height * 0.4, 'enemy', 10).setScale(1.3, 1.3)
+      this.enemy.flipX = true;
+      console.log(enemySpawnPosition)
+      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.enemy)
+      enemySpawnPosition += this.width * 3
+
+    }
+
     this.backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
-    this.backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.enemy)
 
     this.flower2 = backgroundRepeat(this, width / 2.5, height / 1.3, 'flower2', 0.75, 0.4, 0.4)
     this.ground2 = backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
