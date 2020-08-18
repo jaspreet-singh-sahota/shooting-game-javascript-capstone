@@ -119,6 +119,15 @@ export default class ParallaxScene extends Phaser.Scene {
       setScale: { x: 0.5, y: 0.5 }
     }) 
 
+    Phaser.Actions.Call(this.coin.getChildren(), child => {
+      child.anims.play('spin');
+    });
+    Phaser.Actions.Call(this.coin1.getChildren(), child => {
+      child.anims.play('spin');
+    });
+    Phaser.Actions.Call(this.coin2.getChildren(), child => {
+      child.anims.play('spin');
+    })
 
     this.flower2 = backgroundRepeat(this, width / 2.5, height / 1.3, 'flower2', 0.75, 0.4, 0.4)
     this.ground2 = backgroundRepeat(this, 0, height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
