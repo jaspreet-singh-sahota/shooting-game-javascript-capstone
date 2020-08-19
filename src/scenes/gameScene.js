@@ -222,7 +222,10 @@ export default class GameScene extends Phaser.Scene {
     player.setActive(false)
     player.setVisible(false)
     player.body.enable = false;
-
+    let index = this.enemies.indexOf(true)
+    if (index) {
+      this.enemies[index] = false
+    }
   }
 
   gameOver() {
@@ -312,15 +315,16 @@ export default class GameScene extends Phaser.Scene {
         child.anims.play('spin');
       });
     }
-
+    
     this.laserGroup = new LaserGroup(this);
     this.enemyGroup = new EnemyGroup(this)
     this.enemyAttackGroup = new EnemyAttackGroup(this)
+    this.enemyAttackPositions = 0
+    this.enemies = []
 
     for (let i = 0; i < 31; i++) {
       this.enemyGroup.createEnemy(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.5)
-      // this.enemyAttackGroup.createEnemyAttack(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
-      this.enemyAttackPosition(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
+      this.enemies.push(true)
       this.enemySpawnPosition += this.width * 3
     }
 
@@ -340,7 +344,6 @@ export default class GameScene extends Phaser.Scene {
         })
     });
 
-    // this.enemyAttackGroup.createEnemyAttack(-1000, this.height, this.player, this, this.laserGroup )
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -354,6 +357,9 @@ export default class GameScene extends Phaser.Scene {
       delay: 3000,
       loop: true,
       callback: () => {
+        if (!x && !y) {
+          return;
+        }
         let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
         attack.flipX = true
         attack.setVelocityX(-300);
@@ -375,6 +381,12 @@ export default class GameScene extends Phaser.Scene {
 
   attackInterval() {
     this.timer = false
+    for (let i = 0; i < this.enemies.length; i++) {
+      if (this.enemies[i]) {
+        this.enemyAttackPosition(this.width * 0.9 + this.enemyAttackPositions, this.height * 0.735, this.player, this)
+      }
+      this.enemyAttackPositions += this.width * 3
+    }
     this.time.addEvent({
       delay: 10,
       repeat: 0,

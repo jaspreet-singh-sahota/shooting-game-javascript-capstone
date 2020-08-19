@@ -1,19 +1,7 @@
 import './styles/style.css';
 
-import GameScene from './scenes/gameScene'
+import config from './config/config'
 
-const config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 600 },
-      // debug: true
-    }
-  },
-  scene: [GameScene]
-}
+config
 
 export default new Phaser.Game(config)
