@@ -238,7 +238,26 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.laserGroup = new LaserGroup(this);
-   
+    this.enemyGroup = new EnemyGroup(this)
+    this.enemyAttackGroup = new EnemyAttackGroup(this)
+
+    for (let i = 0; i < 31; i++) {
+      this.enemyGroup.createEnemy(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.5)
+      // this.enemyAttackGroup.createEnemyAttack(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
+      this.enemyAttackPosition(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
+      this.enemySpawnPosition += this.width * 3
+    }
+
+    Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
+      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, laserChild)
+      this.physics.add.overlap(laserChild, [this.enemyAttack], this.disableEnemyAttack, null, this)
+      Phaser.Actions.Call(this.enemyGroup.getChildren(), enemyChild => {
+        this.backgroundRepeat(this, this.width * 0.5, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, enemyChild)
+        this.physics.add.overlap(laserChild, [enemyChild], this.disableEnemyAttack, null, this)
+        this.physics.add.overlap(this.player, [enemyChild], this.gameOver, null, this)
+      });
+    });
+
     Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
       Phaser.Actions.Call(this.enemyAttackGroup.getChildren(), enemyAttackChild => {
         this.physics.add.overlap(laserChild, [enemyAttackChild], this.disableEnemyAttack, null, this)
