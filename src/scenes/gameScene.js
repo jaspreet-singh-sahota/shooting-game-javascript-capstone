@@ -258,6 +258,11 @@ export default class GameScene extends Phaser.Scene {
         let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
         attack.flipX = true
         attack.setVelocityX(-300);
+        attack.body.allowGravity = false;
+        scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
+        Phaser.Actions.Call(this.laserGroup.getChildren(), playerAttack => {
+          scenes.physics.add.overlap(playerAttack, [attack], scenes.disableEnemyAttack, null, scenes)
+        })
         this.time.addEvent({
           delay: 1800,
           repeat: 0,
