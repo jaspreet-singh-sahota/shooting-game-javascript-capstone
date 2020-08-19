@@ -63,7 +63,13 @@ class EnemyGroup extends Phaser.Physics.Arcade.Group {
     });
   }
 
-  
+  createEnemy(x, y) {
+    const enemy = this.getFirstDead(false);
+
+    if (enemy) {
+      enemy.enemyPosition(x, y);
+    }
+  }
 }
 
 
