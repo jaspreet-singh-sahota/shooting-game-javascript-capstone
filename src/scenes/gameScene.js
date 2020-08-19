@@ -87,6 +87,12 @@ class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
     });
   }
   
+  createEnemyAttack(x, y, player, scenes, playerAttackGroup ) {
+    const enemy = this.getFirstDead(false);
+    if (enemy) {
+      enemy.enemyPosition(x, y, player, scenes, playerAttackGroup )
+    };
+  }
 }
 
 var score = 0;
