@@ -72,6 +72,13 @@ class EnemyGroup extends Phaser.Physics.Arcade.Group {
   }
 }
 
+class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'enemyAttack', 10);
+  }
+
+  }
+}
 
 class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
