@@ -239,7 +239,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.laserGroup = new LaserGroup(this);
    
-   
+    Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
+      Phaser.Actions.Call(this.enemyAttackGroup.getChildren(), enemyAttackChild => {
+        this.physics.add.overlap(laserChild, [enemyAttackChild], this.disableEnemyAttack, null, this)
+        })
+    });
 
     // this.enemyAttackGroup.createEnemyAttack(-1000, this.height, this.player, this, this.laserGroup )
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
