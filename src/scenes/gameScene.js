@@ -77,6 +77,31 @@ class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, 'enemyAttack', 10);
   }
 
+  enemyPosition(x, y, player, scenes, playerAttackGroup) {
+    this.scene.time.addEvent({
+      delay: 3000,
+      loop: true,
+      callback: () => {
+        let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
+        attack.flipX = true
+        attack.setVelocityX(-300);
+        attack.body.allowGravity = false;
+        scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
+        if (playerAttackGroup) {
+          Phaser.Actions.Call(playerAttackGroup.getChildren(), playerAttack => {
+
+            scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
+          })
+        }
+        this.scene.time.addEvent({
+          delay: 1800,
+          repeat: 0,
+          callback: () => {
+            attack.destroy();
+          }
+        });
+      }
+    });
   }
 }
 
