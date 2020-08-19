@@ -50,6 +50,22 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
   }
 }
 
+class EnemyGroup extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+      frameQuantity: 30,
+      key: 'enemy',
+      active: false,
+      visible: false,
+      classType: Enemy
+    });
+  }
+
+  
+}
+
 
 var score = 0;
 export default class GameScene extends Phaser.Scene {
