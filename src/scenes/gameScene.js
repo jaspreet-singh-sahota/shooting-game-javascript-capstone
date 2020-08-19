@@ -8,7 +8,16 @@ class Laser extends Phaser.Physics.Arcade.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.setVelocityX(700);
+    this.body.enable = true
   }
+}
+
+class Enemy extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y) {
+    super(scene, x, y, 'enemy', 10);
+  }
+
+ 
 }
 
 class LaserGroup extends Phaser.Physics.Arcade.Group {
@@ -16,7 +25,7 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 20,
+      frameQuantity: 1,
       key: 'playerAttack',
       active: false,
       visible: false,
@@ -33,6 +42,7 @@ class LaserGroup extends Phaser.Physics.Arcade.Group {
   }
 }
 
+
 var score = 0;
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -41,7 +51,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    this.playerSpeed = 250;
+    this.playerSpeed = 1050;
     this.jumpSpeed = -600;
   };
 
@@ -123,9 +133,12 @@ export default class GameScene extends Phaser.Scene {
 
   disableEnemyAttack(player, enemy) {
     enemy.setActive(false)
-    enemy.disableBody(true, true);
+    enemy.body.enable = false;
     enemy.setVisible(false)
-    player.destroy()
+    player.setActive(false)
+    player.setVisible(false)
+    player.body.enable = false;
+
   }
 
   gameOver() {
@@ -174,15 +187,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
-    let enemySpawnPosition = 0
-    for (let i = 0; i < 34; i++) {
-      this.enemy = this.physics.add.sprite(enemySpawnPosition + this.width * 0.9, this.height * 0.4, 'enemy', 10).setScale(1.3, 1.3)
-      this.enemy.flipX = true;
-      console.log(enemySpawnPosition)
-      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.enemy)
-      enemySpawnPosition += this.width * 3
-
-    }
+    this.enemySpawnPosition = 0
 
     if (!this.anims.get('walking')) {
       this.anims.create({
@@ -218,59 +223,43 @@ export default class GameScene extends Phaser.Scene {
       });
     }
 
-    this.enemy.anims.play('enemy')
-
     for (let i = 0; i < this.coins.length; i++) {
       Phaser.Actions.Call(this.coins[i].getChildren(), child => {
         child.anims.play('spin');
       });
     }
 
-    this.enemyAttack()
     this.laserGroup = new LaserGroup(this);
+   
+   
 
-    Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
-      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, child)
-      this.physics.add.overlap(child, [this.enemy, this.enemyAttack], this.disableEnemyAttack, null, this)
-    });
-
+    // this.enemyAttackGroup.createEnemyAttack(-1000, this.height, this.player, this, this.laserGroup )
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-    this.physics.add.collider(this.player, this.ground2, this.ground, this.enemyAttack);
     this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
-    this.physics.add.overlap(this.player, [this.enemy, this.enemyAttack], this.gameOver, null, this)
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.cameras.main.setBounds(0, 0, this.width * 100, this.height)
     this.cameras.main.startFollow(this.player);
   }
 
-  enemyAttack() {
-    this.enemyAttack = this.physics.add.group({
-      allowGravity: false,
-      immovable: true
-    });
-
-    let spawningAttacks = this.time.addEvent({
+  enemyAttackPosition(x, y, player, scenes) {
+    this.time.addEvent({
       delay: 3000,
       loop: true,
-      callbackScope: this,
-      callback: function () {
-        if (this.enemy.visible === true) {
-          let attack = this.enemyAttack.create(this.width * 0.9, 1000 * 0.44, 'enemyAttack', 17);
-          attack.flipX = true
-          attack.setVelocityX(-300);
-          this.time.addEvent({
-            delay: 1800,
-            repeat: 0,
-            callbackScope: this,
-            callback: function () {
-              attack.destroy();
-            }
-          });
-        }
+      callback: () => {
+        let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
+        attack.flipX = true
+        attack.setVelocityX(-300);
+        this.time.addEvent({
+          delay: 1800,
+          repeat: 0,
+          callback: () => {
+            attack.destroy();
+          }
+        });
       }
     });
-  };
+  }
 
   attackInterval() {
     this.timer = false
@@ -281,13 +270,13 @@ export default class GameScene extends Phaser.Scene {
       callback: function () {
         Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
           child.active = false
-          child.a
+          setTimeout(() => {
+            this.timer = true
+            child.disableBody(true, true)
+          }, 500);
         });
       }
     });
-    setTimeout(() => {
-      this.timer = true
-    }, 950);
   }
 
   update() {
@@ -332,5 +321,4 @@ export default class GameScene extends Phaser.Scene {
       }
     }
   }
-
 }
