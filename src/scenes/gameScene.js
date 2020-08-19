@@ -73,6 +73,22 @@ class EnemyGroup extends Phaser.Physics.Arcade.Group {
 }
 
 
+class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
+  constructor(scene) {
+    super(scene.physics.world, scene);
+
+    this.createMultiple({
+      frameQuantity: 1,
+      key: 'enemyAttack',
+      active: false,
+      visible: false,
+      loop: true,
+      classType: EnemyAttack
+    });
+  }
+  
+}
+
 var score = 0;
 export default class GameScene extends Phaser.Scene {
   constructor() {
