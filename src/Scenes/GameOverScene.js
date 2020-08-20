@@ -9,7 +9,7 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('loadingScreen', 'assets/images/logo-bg.png');
+    this.load.image('loadingScreen', 'assets/images/gameover1.png');
     // eslint-disable-next-line no-unused-expressions
     API;
   }
@@ -21,12 +21,12 @@ export default class GameOverScene extends Phaser.Scene {
 
     let height = this.scale.height * 0.5
     let width = this.scale.width * 0.5
-    this.add.image(width, height, 'loadingScreen').setScale(0.85, 1.13);
+    this.add.image(width * 1.7, height, 'loadingScreen').setScale(0.15, 0.2);
 
     const score = LocalStorage.readLocalStorage();
     LocalStorage.clearLocalStorage();
 
-    this.title = this.add.text(this.game.width * 0.5, 128, 'GAME OVER', {
+    this.title = this.add.text(width , 128, 'GAME OVER', {
       fontSize: 47,
       fontStyle: 'bold',
       color: 'white',
@@ -36,8 +36,8 @@ export default class GameOverScene extends Phaser.Scene {
 
     this.gameButton = new Button(
       this,
-      width / 2,
-      height - 100,
+      width ,
+      height + 100,
       'blueButton1',
       'blueButton2',
       'Play Again',
@@ -45,7 +45,7 @@ export default class GameOverScene extends Phaser.Scene {
     );
 
     this.title = this.add.text(
-      this.game.width,
+      width,
       200,
       `Your score is: ${score}`,
       {
@@ -58,14 +58,13 @@ export default class GameOverScene extends Phaser.Scene {
     );
     this.title.setOrigin(0.5);
 
-    const div = Dom.createForm();
-    this.add.dom(this.game.width * 0.7, 250, div);
+    const div = Dom.form();
 
     Dom.addButtonFunctionality(score);
 
     this.submitButton = new Button(
       this,
-      width / 2,
+      width,
       height / 2 + 100,
       'blueButton1',
       'blueButton2',
