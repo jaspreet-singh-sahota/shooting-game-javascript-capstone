@@ -64,3 +64,17 @@ input::-webkit-input-placeholder {
   text-align: center;
 }
 
+.response {
+  font-size: 32px;
+  margin-left: 17%;
+  color: #83e845;
+  margin-bottom: 3px;
+}
+
+.wait {
+  width: 100%;
+  font-size: 32px;
+  margin-left: 12.5%;
+  color: white;
+  margin-bottom: 3px;
+}
