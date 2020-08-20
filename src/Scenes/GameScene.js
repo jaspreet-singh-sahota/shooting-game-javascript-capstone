@@ -1,3 +1,5 @@
+import LocalStorage from '../Objects/localStorage';
+
 class Laser extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'playerAttack', 30);
@@ -89,7 +91,6 @@ class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
         scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
         if (playerAttackGroup) {
           Phaser.Actions.Call(playerAttackGroup.getChildren(), playerAttack => {
-
             scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
           })
         }
@@ -156,6 +157,8 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('flower1', 'assets/images/flower1.png');
     this.load.image('flower2', 'assets/images/flower2.png');
     this.load.image('ground2', 'assets/images/ground2.png');
+    this.load.spritesheet('star', 'assets/images/star.png', { frameWidth: 70, frameHeight: 69 });
+    this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 125, frameHeight: 110.33 });
 
     this.load.spritesheet('player', 'assets/images/player.png', {
       frameWidth: 50.5,
@@ -171,25 +174,11 @@ export default class GameScene extends Phaser.Scene {
       spacing: 5,
     });
 
-    this.load.spritesheet('enemy', 'assets/images/enemy.png', {
-      frameWidth: 125,
-      frameHeight: 110.33,
-      margin: 0,
-      spacing: 0,
-    });
-
     this.load.spritesheet('enemyAttack', 'assets/images/enemy.png', {
       frameWidth: 65,
       frameHeight: 110.33,
       margin: -10,
       spacing: 12,
-    });
-
-    this.load.spritesheet('star', 'assets/images/star.png', {
-      frameWidth: 70,
-      frameHeight: 69,
-      margin: 0,
-      spacing: 0,
     });
   }
 
@@ -213,6 +202,7 @@ export default class GameScene extends Phaser.Scene {
 
     score += 10;
     this.scoreText.setText('Score: ' + score);
+    LocalStorage.saveLocalStorage(score);
   }
 
   disableEnemyAttack(player, enemy) {
@@ -222,14 +212,14 @@ export default class GameScene extends Phaser.Scene {
     player.setActive(false)
     player.setVisible(false)
     player.body.enable = false;
-    let index = this.enemies.indexOf(true)
-    if (index) {
-      this.enemies[index] = false
-    }
   }
 
   gameOver() {
-    console.log('gameover')
+    let gameOverText = this.add.text(320, 240, 'GAME OVER', { fontSize: '32px', fill: 'Black' });
+    // this.scene.switch('Game');
+    // this.player.setTint(0xff0000)
+    this.scene.stop();
+    this.scene.start('GameOverScene');
   }
 
   create() {
@@ -342,11 +332,12 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Actions.Call(this.enemyAttackGroup.getChildren(), enemyAttackChild => {
         this.physics.add.overlap(laserChild, [enemyAttackChild], this.disableEnemyAttack, null, this)
         })
-    });
-
-    this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-    this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
-    this.cursors = this.input.keyboard.createCursorKeys();
+      });
+      
+      this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+      this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
+      this.cursors = this.input.keyboard.createCursorKeys();
+      this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 
     this.cameras.main.setBounds(0, 0, this.width * 100, this.height)
     this.cameras.main.startFollow(this.player);
@@ -427,8 +418,6 @@ export default class GameScene extends Phaser.Scene {
       this.player.body.setVelocityY(-400);
       this.player.setFrame(42);
     }
-
-    this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 
     if (this.keyX.isDown && this.player.flipX === true) {
       if (this.timer) {

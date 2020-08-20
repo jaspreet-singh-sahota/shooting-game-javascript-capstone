@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 const API = (() => {
+  const key = '0l2F2qhP58AheZFEqexZ'
+  const link = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/'
   async function getKey() {
     try {
       const response = await fetch(
@@ -24,7 +26,7 @@ const API = (() => {
   async function getScores() {
     try {
       const scores = await fetch(
-        'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/0l2F2qhP58AheZFEqexZ/scores/',
+        `${link}/${key}/scores/`,
         {
           method: 'GET',
           headers: {
@@ -42,7 +44,7 @@ const API = (() => {
   async function postScores(name, score) {
     try {
       const result = await fetch(
-        'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/0l2F2qhP58AheZFEqexZ/scores/',
+        `${link}/${key}/scores/`,
         {
           method: 'POST',
           headers: {
