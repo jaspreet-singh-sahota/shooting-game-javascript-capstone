@@ -1,7 +1,7 @@
 import './styles/style.css';
 
 import config from './Config/config';
-import GameScene from './Scenes/gameScene';
+import GameScene from './Scenes/GameScene';
 import BootScene from './Scenes/BootScene';
 import PreloaderScene from './Scenes/PreloaderScene';
 import OptionsScene from './Scenes/Options';
