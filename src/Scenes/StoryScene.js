@@ -1,6 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
-import Dom from '../Objects/dom';
+import Dom from '../../../Phaser3-paralex-bg/src/scenes/dom';
 // eslint-disable-next-line no-undef
 export default class StoryScene extends Phaser.Scene {
   constructor() {

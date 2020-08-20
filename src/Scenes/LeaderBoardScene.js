@@ -11,7 +11,7 @@ export default class LeaderBoardScene extends Phaser.Scene {
     this.load.image('leaderBoardBackGround', 'assets/images/score.png');
   }
 
-  create() {
+  async create() {
     const height = this.scale.height * 0.5
     const width = this.scale.width * 0.5
     this.add.image(width, height, 'leaderBoardBackGround').setScale(1, 0.9);

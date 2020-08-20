@@ -1,11 +1,11 @@
 import Button from '../Objects/Button';
 import API from '../Objects/api';
-import Dom from '../Objects/dom';
-import LocalStorage from '../Objects/localStorage';
+import Dom from '../../../Phaser3-paralex-bg/src/scenes/dom';
+import LocalStorage from '../../../Phaser3-paralex-bg/src/scenes/localStorage';
 /* eslint-disable no-undef */
-export default class SceneGameOver extends Phaser.Scene {
+export default class GameOverScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'SceneGameOver' });
+    super({ key: 'GameOverScene' });
   }
 
   preload() {

@@ -135,7 +135,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    this.playerSpeed = 1050;
+    this.playerSpeed = 280;
     this.jumpSpeed = -600;
   };
 
@@ -268,7 +268,7 @@ export default class GameScene extends Phaser.Scene {
       this.coins.push(this.physics.add.staticGroup({
         key: 'star',
         repeat: 100,
-        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: randomInteger(100, 1000) },
+        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: randomInteger(300, 1000) },
         setScale: { x: 0.5, y: 0.5 }
       }))
     }
