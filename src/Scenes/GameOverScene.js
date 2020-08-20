@@ -61,7 +61,6 @@ export default class GameOverScene extends Phaser.Scene {
       200,
       `Your score is: ${score}`,
       {
-        fontFamily: 'monospace',
         fontSize: 32,
         fontStyle: 'bold',
         color: 'white',

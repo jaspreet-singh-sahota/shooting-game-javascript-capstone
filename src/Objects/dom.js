@@ -18,13 +18,13 @@ const Dom = (() => {
     const form = document.querySelector('#form');
     const p = document.querySelector('p');
     button.onclick = () => {
-      console.log("clicked")
       if (input.value !== '') {
         form.classList.add('empty');
-        form.innerHTML = '<p>Please wait... </p>';
+        form.innerHTML = '<h3 class="wait">Please wait... </h3>';
         API.postScores(input.value, score).then((response) => {
-          form.innerHTML = `<p>${response.result} </p>`;
+          form.innerHTML = `<h3 class="response">${response.result} </h3>`;
         });
+
       } else {
         p.innerHTML = 'Name can\'t be blank'
       }

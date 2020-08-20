@@ -26,7 +26,7 @@ const API = (() => {
   async function getScores() {
     try {
       const scores = await fetch(
-        `${link}/${key}/scores/`,
+        `${link}${key}/scores/`,
         {
           method: 'GET',
           headers: {
@@ -44,7 +44,7 @@ const API = (() => {
   async function postScores(name, score) {
     try {
       const result = await fetch(
-        `${link}/${key}/scores/`,
+        `${link}${key}/scores/`,
         {
           method: 'POST',
           headers: {
@@ -57,6 +57,7 @@ const API = (() => {
           }),
         },
       );
+
       return result.json();
     } catch (error) {
       return error.json();
