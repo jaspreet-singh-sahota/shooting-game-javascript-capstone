@@ -14,7 +14,6 @@ export default class GameScene extends Phaser.Scene {
     this.jumpSpeed = -600;
     this.height = this.scale.height
     this.width = this.scale.width
-    this.checkFunction = true
   };
 
   preload() {
@@ -86,7 +85,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.checkFunction = false
     this.scene.stop();
     this.scene.start('GameOverScene');
   }
@@ -218,7 +216,7 @@ export default class GameScene extends Phaser.Scene {
 
   enemyAttackPosition(x, y, player, scenes) {
     this.time.addEvent({
-      delay: 7100,
+      delay: 7300,
       loop: true,
       callback: () => {
         let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
