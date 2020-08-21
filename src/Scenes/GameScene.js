@@ -8,7 +8,6 @@ let checkFunction = true
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
-    this.laserGroup;
   }
 
   init() {
@@ -69,11 +68,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   collectStar(player, star) {
-    star.disableBody(true, true);
-
     score += 10;
     this.scoreText.setText('Score: ' + score);
     LocalStorage.saveLocalStorage(score);
+    star.disableBody(true, true);
   }
 
   disableEnemyAttack(player, enemy) {
@@ -91,47 +89,43 @@ export default class GameScene extends Phaser.Scene {
     this.scene.start('GameOverScene');
   }
 
+  randomInteger(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
   create() {
     this.height = this.scale.height
     this.width = this.scale.width
     this.timer = true
 
     this.add.image(this.width * 0.5, this.height * 0.3, 'sky').setScrollFactor(0).setScale(0.8, 0.7)
-
-    this.cloud1 = this.backgroundRepeat(this, 0, this.height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
-    this.mountain = this.backgroundRepeat(this, 0, this.height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
-    this.cloud2 = this.backgroundRepeat(this, this.width / 2, this.height * 0.5, 'cloud2', 0.15, 0.5, 0.5, 0, 1)
-    this.grass2 = this.backgroundRepeat(this, this.width / 2.4, this.height / 1.5, 'grass2', 0.5, 0.4, 0.4)
-    this.grass1 = this.backgroundRepeat(this, this.width / 7.5, this.height / 1.5, 'grass3', 0.5, 0.4, 0.4)
-    this.grass3 = this.backgroundRepeat(this, this.width / 1.3, this.height / 1.5, 'grass1', 0.5, 0.4, 0.4)
-    this.ground = this.backgroundRepeat(this, 0, this.height / 1.1, 'ground', 0.75, 0.5, 0.5, 0, 1)
-
-    this.tree1 = this.backgroundRepeat(this, this.width / 5, this.height / 1.8, 'tree', 0.75, 0.5, 0.5)
-    this.tree2 = this.backgroundRepeat(this, this.width / 1.3, this.height / 1.6, 'tree', 0.75, 0.35, 0.35)
-    this.rock1 = this.backgroundRepeat(this, this.width / 1.8, this.height / 1.3, 'rock2', 0.75, 0.4, 0.4)
-    this.rock2 = this.backgroundRepeat(this, this.width / 3.5, this.height / 1.3, 'rock3', 0.75, 0.4, 0.4)
-    this.rock3 = this.backgroundRepeat(this, this.width / 1.1, this.height / 1.3, 'rock1', 0.75, 0.4, 0.4)
-    this.flower2 = this.backgroundRepeat(this, this.width / 2.5, this.height / 1.3, 'flower2', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, 0, this.height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
+    this.backgroundRepeat(this, 0, this.height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
+    this.backgroundRepeat(this, this.width / 2, this.height * 0.5, 'cloud2', 0.15, 0.5, 0.5, 0, 1)
+    this.backgroundRepeat(this, this.width / 2.4, this.height / 1.5, 'grass2', 0.5, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 7.5, this.height / 1.5, 'grass3', 0.5, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 1.3, this.height / 1.5, 'grass1', 0.5, 0.4, 0.4)
+    this.backgroundRepeat(this, 0, this.height / 1.1, 'ground', 0.75, 0.5, 0.5, 0, 1)
+    this.backgroundRepeat(this, this.width / 5, this.height / 1.8, 'tree', 0.75, 0.5, 0.5)
+    this.backgroundRepeat(this, this.width / 1.3, this.height / 1.6, 'tree', 0.75, 0.35, 0.35)
+    this.backgroundRepeat(this, this.width / 1.8, this.height / 1.3, 'rock2', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 3.5, this.height / 1.3, 'rock3', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 1.1, this.height / 1.3, 'rock1', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 2.5, this.height / 1.3, 'flower2', 0.75, 0.4, 0.4)
     this.player = this.physics.add.sprite(this.width * 0.1, this.height * 0.4, 'player', 3).setScale(1.3, 1.3);
     this.player.setBounce(0.2);
-    this.flower1 = this.backgroundRepeat(this, this.width / 1.7, this.height / 1.2, 'flower1', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, this.width / 1.7, this.height / 1.2, 'flower1', 0.75, 0.4, 0.4)
+    this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
     this.coins = []
-
-    function randomInteger(min, max) {
-      return Math.random() * (max - min) + min;
-    }
 
     for (let i = 0; i < 4; i++) {
       this.coins.push(this.physics.add.staticGroup({
         key: 'star',
         repeat: 100,
-        setXY: { x: this.width * Math.random(1), y: this.height * randomInteger(0.5, 0.8), stepX: randomInteger(300, 1000) },
+        setXY: { x: this.width * Math.random(1), y: this.height * this.randomInteger(0.5, 0.8), stepX: this.randomInteger(300, 1000) },
         setScale: { x: 0.5, y: 0.5 }
       }))
     }
-
-    this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
-    this.enemySpawnPosition = 0
 
     if (!this.anims.get('walking')) {
       this.anims.create({
@@ -144,7 +138,7 @@ export default class GameScene extends Phaser.Scene {
         repeat: -1
       });
     }
-
+    
     if (!this.anims.get('spin')) {
       this.anims.create({
         key: 'spin',
@@ -155,7 +149,7 @@ export default class GameScene extends Phaser.Scene {
         repeat: -1
       });
     }
-
+    
     if (!this.anims.get('enemy')) {
       this.anims.create({
         key: 'enemy',
@@ -166,7 +160,7 @@ export default class GameScene extends Phaser.Scene {
         repeat: -1
       });
     }
-
+    
     for (let i = 0; i < this.coins.length; i++) {
       Phaser.Actions.Call(this.coins[i].getChildren(), child => {
         child.anims.play('spin');
@@ -176,6 +170,7 @@ export default class GameScene extends Phaser.Scene {
     this.laserGroup = new LaserGroup(this);
     this.enemyGroup = new EnemyGroup(this)
     this.enemyAttackGroup = new EnemyAttackGroup(this)
+    this.enemySpawnPosition = 0
     this.enemies = []
 
     for (let i = 0; i < 30; i++) {
@@ -212,11 +207,10 @@ export default class GameScene extends Phaser.Scene {
 
   enemyAttackPosition(x, y, player, scenes) {
     this.time.addEvent({
-      delay: 7000,
+      delay: 7100,
       loop: true,
       callback: () => {
-        let attack
-        attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
+        let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
         attack.setVelocityX(-350);
         attack.body.allowGravity = false;
         scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)         
