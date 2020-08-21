@@ -140,6 +140,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('ground2', 'assets/images/ground2.png');
     this.load.spritesheet('star', 'assets/images/star.png', { frameWidth: 70, frameHeight: 69 });
     this.load.spritesheet('enemy', 'assets/images/enemy.png', { frameWidth: 125, frameHeight: 110.33 });
+    this.load.spritesheet('enemyAttack', 'assets/images/test.png', { frameWidth: 110, frameHeight: 160,});
 
     this.load.spritesheet('player', 'assets/images/player.png', {
       frameWidth: 50.5,
@@ -155,12 +156,6 @@ export default class GameScene extends Phaser.Scene {
       spacing: 5,
     });
 
-    this.load.spritesheet('enemyAttack', 'assets/images/enemy.png', {
-      frameWidth: 65,
-      frameHeight: 110.33,
-      margin: -10,
-      spacing: 12,
-    });
   }
 
   backgroundRepeat(scene, w, h, text, speed, s1, s2, o1, o2, player) {
@@ -295,7 +290,7 @@ export default class GameScene extends Phaser.Scene {
 
     for (let i = 0; i < 30; i++) {
       this.enemyGroup.createEnemy(3000 + this.enemySpawnPosition, this.height * 0.5)
-      this.enemyAttackPosition(3000 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
+      this.enemyAttackPosition(3000 + this.enemySpawnPosition, this.height * 0.753, this.player, this)
       this.enemies.push(true)
       this.enemySpawnPosition += this.width * 3
     }
@@ -331,8 +326,7 @@ export default class GameScene extends Phaser.Scene {
       loop: true,
       callback: () => {
         let attack
-        attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
-        attack.flipX = true
+        attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
         attack.setVelocityX(-350);
         attack.body.allowGravity = false;
         scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)         

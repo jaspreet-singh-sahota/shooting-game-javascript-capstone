@@ -1,4 +1,4 @@
-import GameScene from '../Scenes/GameScene'
+// import GameScene from '../Scenes/GameScene'
 
 const config = {
   type: Phaser.AUTO,
@@ -8,10 +8,10 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 600 },
-      debug: true
+      // debug: true
     }
   },
-  scene: [GameScene]
+  // scene: [GameScene]
 }
 
 export default config
