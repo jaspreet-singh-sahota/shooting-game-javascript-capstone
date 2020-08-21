@@ -1,4 +1,5 @@
-import 'phaser'
+/* eslint no-undef: 0 */
+import 'phaser';
 import EnemyGroup from '../src/helper/enemyGroup';
 
 test('EnemyGroup is a subclass of Phaser.Scene', () => {

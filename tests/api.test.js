@@ -61,4 +61,3 @@ it('it should return the score', () => {
     );
   }).catch(() => { });
 });
-
