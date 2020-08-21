@@ -1,4 +1,5 @@
- export default class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
+// eslint-disable-next-line no-undef
+export default class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'enemyAttack', 10);
   }
@@ -7,6 +8,6 @@
     this.body.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
-    this.body.enable = true
+    this.body.enable = true;
   }
 }

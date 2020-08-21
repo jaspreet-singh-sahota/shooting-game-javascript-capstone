@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 export default class Laser extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, 'playerAttack', 30);
@@ -8,6 +9,6 @@ export default class Laser extends Phaser.Physics.Arcade.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.setVelocityX(700);
-    this.body.enable = true
+    this.body.enable = true;
   }
 }

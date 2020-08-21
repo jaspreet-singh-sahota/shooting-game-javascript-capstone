@@ -1,6 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
-import Dom from '../Objects/dom';
+// import Dom from '../Objects/dom';
 // eslint-disable-next-line no-undef
 export default class StoryScene extends Phaser.Scene {
   constructor() {
@@ -12,8 +12,8 @@ export default class StoryScene extends Phaser.Scene {
   }
 
   create() {
-    let height = this.scale.height * 0.5
-    let width = this.scale.width * 0.5
+    const height = this.scale.height * 0.5;
+    const width = this.scale.width * 0.5;
     this.add.image(width, height, 'bg').setScale(0.85, 1.13);
 
     // const div = Dom.createStory();

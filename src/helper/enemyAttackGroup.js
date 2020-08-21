@@ -1,5 +1,5 @@
 import EnemyAttack from './enemyAttack';
-
+// eslint-disable-next-line no-undef
 export default class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
   constructor(scene) {
     super(scene.physics.world, scene);
@@ -10,14 +10,14 @@ export default class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
       active: false,
       visible: false,
       loop: true,
-      classType: EnemyAttack
+      classType: EnemyAttack,
     });
   }
 
   createEnemyAttack(x, y, player, scenes, playerAttackGroup) {
     const enemy = this.getFirstDead(false);
     if (enemy) {
-      enemy.enemyPosition(x, y, player, scenes, playerAttackGroup)
-    };
+      enemy.enemyPosition(x, y, player, scenes, playerAttackGroup);
+    }
   }
 }

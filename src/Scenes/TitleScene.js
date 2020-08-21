@@ -11,9 +11,9 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
-    let height = this.scale.height * 0.5
-    let width = this.scale.width * 0.5
-    this.add.image(width, height, 'bg').setScale(0.85,1.13);
+    const height = this.scale.height * 0.5;
+    const width = this.scale.width * 0.5;
+    this.add.image(width, height, 'bg').setScale(0.85, 1.13);
 
     this.storyButton = new Button(
       this,

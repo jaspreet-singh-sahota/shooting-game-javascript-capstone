@@ -10,8 +10,8 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   preload() {
-    const width = this.scale.width * 0.5
-    const height = this.scale.height * 0.5
+    const width = this.scale.width * 0.5;
+    const height = this.scale.height * 0.5;
     this.logo = this.add.sprite(width, height, 'logo', 0).setScale(1.61, 2.17);
     this.load.image('blueButton1', 'assets/ui/blue_button02.png');
     this.load.image('blueButton2', 'assets/ui/blue_button03.png');
@@ -23,14 +23,15 @@ export default class PreloaderScene extends Phaser.Scene {
       this.anims.create({
         key: 'logo',
         frames: this.anims.generateFrameNames('logo', {
-          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+          frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+            14, 15, 16, 17, 18, 19, 20, 21, 22],
         }),
         frameRate: 7.5,
-        repeat: -1
+        repeat: -1,
       });
     }
 
-    this.logo.anims.play('logo')
+    this.logo.anims.play('logo');
 
     const progressBar = this.add.graphics();
     const progressBox = this.add.graphics();

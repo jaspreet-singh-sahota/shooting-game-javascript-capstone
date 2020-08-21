@@ -7,13 +7,13 @@ const Dom = (() => {
     const p = document.createElement('p');
     form.setAttribute('class', 'form');
     form.innerHTML = "<input type='search' id='input' placeholder='Enter your name!' aria-label='Search' required/></br><button type='submit' id='submit'> Submit Score</button>";
-    form.appendChild(p)
-    body.appendChild(form)
+    form.appendChild(p);
+    body.appendChild(form);
     return body;
   }
 
   function addButtonFunctionality(score) {
-  const button = document.querySelector('button');
+    const button = document.querySelector('button');
     const input = document.querySelector('input');
     const form = document.querySelector('.form');
     const p = document.querySelector('p');
@@ -24,9 +24,8 @@ const Dom = (() => {
         API.postScores(input.value, score).then((response) => {
           form.innerHTML = `<h3 class="response">${response.result} </h3>`;
         });
-
       } else {
-        p.innerHTML = 'Name can\'t be blank'
+        p.innerHTML = 'Name can\'t be blank';
       }
     };
   }

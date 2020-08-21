@@ -12,12 +12,12 @@ export default class OptionsScene extends Phaser.Scene {
   }
 
   create() {
-    let height = this.scale.height * 0.5
-    let width = this.scale.width * 0.5
-    this.add.image(width, height, 'optionBackground').setScale(0.3, 0.277)
+    let height = this.scale.height * 0.5;
+    let width = this.scale.width * 0.5;
+    this.add.image(width, height, 'optionBackground').setScale(0.3, 0.277);
     this.model = this.sys.game.globals.model;
-    width = this.scale.width * 0.3
-    height = this.scale.height
+    width = this.scale.width * 0.3;
+    height = this.scale.height;
 
     this.text = this.add.text(width + 58, 100, 'Options', { fontSize: 40 });
     this.musicButton = this.add.image(width, 200, 'checkedBox');

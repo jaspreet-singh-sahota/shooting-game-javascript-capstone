@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const API = (() => {
-  const key = '0l2F2qhP58AheZFEqexZ'
-  const link = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/'
+  const key = '0l2F2qhP58AheZFEqexZ';
+  const link = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
   async function getKey() {
     try {
       const response = await fetch(
@@ -64,7 +64,7 @@ const API = (() => {
     }
   }
 
-  return { getScores, postScores , getKey};
+  return { getScores, postScores, getKey };
 })();
 
 export default API;

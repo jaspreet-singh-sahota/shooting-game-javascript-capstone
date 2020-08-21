@@ -16,19 +16,18 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   create() {
-
     this.input.keyboard.enabled = false;
     this.input.keyboard.preventDefault = false;
 
-    let height = this.scale.height * 0.5
-    let width = this.scale.width * 0.5
+    const height = this.scale.height * 0.5;
+    const width = this.scale.width * 0.5;
     this.add.image(width * 1.7, height, 'loadingScreenImgRight').setScale(0.15, 0.2);
-    this.add.image(width *0.3 , height, 'loadingScreenImgLeft').setScale(0.33, 0.5);
+    this.add.image(width * 0.3, height, 'loadingScreenImgLeft').setScale(0.33, 0.5);
 
     const score = LocalStorage.readLocalStorage();
     LocalStorage.clearLocalStorage();
 
-    this.title = this.add.text(width , 128, 'GAME OVER', {
+    this.title = this.add.text(width, 128, 'GAME OVER', {
       fontSize: 47,
       fontStyle: 'bold',
       color: 'white',
@@ -69,8 +68,7 @@ export default class GameOverScene extends Phaser.Scene {
     );
     this.title.setOrigin(0.5);
 
-    const div = Dom.form();
-
+    Dom.form();
     Dom.addButtonFunctionality(score);
   }
 }

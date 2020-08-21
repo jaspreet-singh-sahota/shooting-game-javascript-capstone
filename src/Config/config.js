@@ -1,6 +1,7 @@
-// import GameScene from '../Scenes/GameScene'
+import 'phaser';
 
 const config = {
+  // eslint-disable-next-line no-undef
   type: Phaser.AUTO,
   width: 800,
   height: 600,
@@ -8,10 +9,8 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 600 },
-      // debug: true
-    }
+    },
   },
-  // scene: [GameScene]
-}
+};
 
-export default config
+export default config;
