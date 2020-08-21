@@ -110,6 +110,7 @@ class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
 }
 
 var score = 0;
+let checkFunction = true
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
@@ -117,7 +118,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   init() {
-    this.playerSpeed = 280;
+    this.playerSpeed = 300;
     this.jumpSpeed = -600;
   };
 
@@ -191,14 +192,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.time.addEvent({
-      delay: 100,
-      repeat: 0,
-      callback: () => {
-        this.scene.stop();
-        this.scene.start('GameOverScene');
-      }
-    });
+    checkFunction = false
+    this.scene.stop();
+    this.scene.start('GameOverScene');
   }
 
   create() {
@@ -292,7 +288,7 @@ export default class GameScene extends Phaser.Scene {
       this.enemyGroup.createEnemy(3000 + this.enemySpawnPosition, this.height * 0.5)
       this.enemyAttackPosition(3000 + this.enemySpawnPosition, this.height * 0.753, this.player, this)
       this.enemies.push(true)
-      this.enemySpawnPosition += this.width * 3
+      this.enemySpawnPosition += this.width * 3.03
     }
 
     Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
@@ -346,10 +342,12 @@ export default class GameScene extends Phaser.Scene {
       callback: function () {
         Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
           child.active = false
-          setTimeout(() => {
-            this.timer = true
-            child.disableBody(true, true)
-          }, 500);
+          if (checkFunction) {
+            setTimeout(() => {
+              this.timer = true
+              child.disableBody(true, true)
+            }, 500);
+          }
         });
       }
     });
