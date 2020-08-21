@@ -13,7 +13,7 @@ canvas {
   z-index: -1;
 }
 
-input {
+.input {
   margin-bottom: 55px;
   height: 50px;
   font-size: 32px;
@@ -55,16 +55,16 @@ p {
   transform: translate(-50%, -50%);
 }
 
-input::placeholder {
+.input::placeholder {
   color: #999;
   margin-left: 10%;
 }
 
-input::-webkit-input-placeholder {
+.input::-webkit-input-placeholder {
   text-align: center;
 }
 
-.response {
+#response {
   font-size: 32px;
   margin-left: 16%;
   color: #83e845;
@@ -73,10 +73,14 @@ input::-webkit-input-placeholder {
   text-align: center;
 }
 
-.wait {
+#wait {
   width: 100%;
   font-size: 32px;
   margin-left: 12.5%;
   color: white;
   margin-bottom: 3px;
+}
+
+.button {
+  z-index: 1;
 }

@@ -16,14 +16,6 @@ export default class StoryScene extends Phaser.Scene {
     const width = this.scale.width * 0.5;
     this.add.image(width, height, 'bg').setScale(0.85, 1.13);
 
-    // const div = Dom.createStory();
-
-    // this.add.dom(
-    //   this.game.width * 2 + 50,
-    //   this.game.hight,
-    //   div,
-    // );
-
     this.playButton = new Button(
       this,
       width,

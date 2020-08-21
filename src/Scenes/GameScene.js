@@ -3,15 +3,15 @@ import EnemyGroup from '../helper/enemyGroup';
 import EnemyAttackGroup from '../helper/enemyAttackGroup';
 import LaserGroup from '../helper/playerAttackGroup';
 
-let score = 0;
 // eslint-disable-next-line no-undef
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
   }
-
+  
   init() {
-    this.playerSpeed = 300;
+    this.score = 0;
+    this.playerSpeed = 290;
     this.jumpSpeed = -600;
     this.height = this.scale.height;
     this.width = this.scale.width;
@@ -72,9 +72,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   collectStar(player, star) {
-    score += 10;
-    this.scoreText.setText(`Score: ${score}`);
-    LocalStorage.saveLocalStorage(score);
+    this.score += 10;
+    this.scoreText.setText(`Score: ${this.score}`);
+    LocalStorage.saveLocalStorage(this.score);
     star.disableBody(true, true);
   }
 
@@ -90,7 +90,7 @@ export default class GameScene extends Phaser.Scene {
 
   gameOver() {
     this.scene.stop();
-    this.scene.start('GameOverScene');
+    this.scene.start('GameOverScene');       
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -138,7 +138,7 @@ export default class GameScene extends Phaser.Scene {
     for (let i = 0; i < 30; i += 1) {
       enemyGroup.createEnemy(3000 + enemySpawnPosition, this.height * 0.5);
       this.enemyAttackPosition(3000 + enemySpawnPosition, this.height * 0.753, player, this);
-      enemySpawnPosition += this.width * 3.05;
+      enemySpawnPosition += this.width * 3.1;
     }
   }
 
@@ -234,11 +234,11 @@ export default class GameScene extends Phaser.Scene {
 
   enemyAttackPosition(x, y, player, scenes) {
     this.time.addEvent({
-      delay: 7450,
+      delay: 8000,
       loop: true,
       callback: () => {
         const attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
-        attack.setVelocityX(-350);
+        attack.setVelocityX(-300);
         attack.body.allowGravity = false;
         scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes);
         // eslint-disable-next-line no-undef
@@ -261,7 +261,7 @@ export default class GameScene extends Phaser.Scene {
         Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
           child.active = false;
           this.time.addEvent({
-            delay: 500,
+            delay: 600,
             repeat: 0,
             callbackScope: this,
             callback() {
