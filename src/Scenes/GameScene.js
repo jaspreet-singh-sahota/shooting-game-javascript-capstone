@@ -79,30 +79,11 @@ class EnemyAttack extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, 'enemyAttack', 10);
   }
 
-  enemyPosition(x, y, player, scenes, playerAttackGroup) {
-    this.scene.time.addEvent({
-      delay: 3000,
-      loop: true,
-      callback: () => {
-        let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
-        attack.flipX = true
-        attack.setVelocityX(-300);
-        attack.body.allowGravity = false;
-        scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
-        if (playerAttackGroup) {
-          Phaser.Actions.Call(playerAttackGroup.getChildren(), playerAttack => {
-            scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
-          })
-        }
-        this.scene.time.addEvent({
-          delay: 1800,
-          repeat: 0,
-          callback: () => {
-            attack.destroy();
-          }
-        });
-      }
-    });
+  enemyPosition(x, y) {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
+    this.body.enable = true
   }
 }
 
@@ -111,7 +92,7 @@ class EnemyAttackGroup extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 1,
+      frameQuantity: 100,
       key: 'enemyAttack',
       active: false,
       visible: false,
@@ -183,7 +164,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   backgroundRepeat(scene, w, h, text, speed, s1, s2, o1, o2, player) {
-    const count = 101 * speed
+    const count = 92 * speed
     let screenWidth = 0;
     const platforms = scene.physics.add.staticGroup();
 
@@ -215,11 +196,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    let gameOverText = this.add.text(320, 240, 'GAME OVER', { fontSize: '32px', fill: 'Black' });
-    // this.scene.switch('Game');
-    // this.player.setTint(0xff0000)
-    this.scene.stop();
-    this.scene.start('GameOverScene');
+    this.time.addEvent({
+      delay: 100,
+      repeat: 0,
+      callback: () => {
+        this.scene.stop();
+        this.scene.start('GameOverScene');
+      }
+    });
   }
 
   create() {
@@ -227,8 +211,7 @@ export default class GameScene extends Phaser.Scene {
     this.width = this.scale.width
     this.timer = true
 
-    this.add.image(this.width * 0.5, this.height * 0.3, 'sky')
-      .setScrollFactor(0).setScale(0.8, 0.7)
+    this.add.image(this.width * 0.5, this.height * 0.3, 'sky').setScrollFactor(0).setScale(0.8, 0.7)
 
     this.cloud1 = this.backgroundRepeat(this, 0, this.height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
     this.mountain = this.backgroundRepeat(this, 0, this.height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
@@ -247,12 +230,11 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(this.width * 0.1, this.height * 0.4, 'player', 3).setScale(1.3, 1.3);
     this.player.setBounce(0.2);
     this.flower1 = this.backgroundRepeat(this, this.width / 1.7, this.height / 1.2, 'flower1', 0.75, 0.4, 0.4)
+    this.coins = []
 
     function randomInteger(min, max) {
       return Math.random() * (max - min) + min;
     }
-
-    this.coins = []
 
     for (let i = 0; i < 4; i++) {
       this.coins.push(this.physics.add.staticGroup({
@@ -309,11 +291,11 @@ export default class GameScene extends Phaser.Scene {
     this.laserGroup = new LaserGroup(this);
     this.enemyGroup = new EnemyGroup(this)
     this.enemyAttackGroup = new EnemyAttackGroup(this)
-    this.enemyAttackPositions = 0
     this.enemies = []
 
-    for (let i = 0; i < 31; i++) {
-      this.enemyGroup.createEnemy(this.width * 0.9 + this.enemySpawnPosition, this.height * 0.5)
+    for (let i = 0; i < 30; i++) {
+      this.enemyGroup.createEnemy(3000 + this.enemySpawnPosition, this.height * 0.5)
+      this.enemyAttackPosition(3000 + this.enemySpawnPosition, this.height * 0.735, this.player, this)
       this.enemies.push(true)
       this.enemySpawnPosition += this.width * 3
     }
@@ -331,53 +313,38 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
       Phaser.Actions.Call(this.enemyAttackGroup.getChildren(), enemyAttackChild => {
         this.physics.add.overlap(laserChild, [enemyAttackChild], this.disableEnemyAttack, null, this)
-        })
-      });
+      })
+    });
       
-      this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
-      this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
-      this.cursors = this.input.keyboard.createCursorKeys();
-      this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+    this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+    this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
 
-    this.cameras.main.setBounds(0, 0, this.width * 100, this.height)
+    this.cameras.main.setBounds(0, 0, this.width * 90, this.height)
     this.cameras.main.startFollow(this.player);
   }
 
   enemyAttackPosition(x, y, player, scenes) {
     this.time.addEvent({
-      delay: 3000,
+      delay: 7000,
       loop: true,
       callback: () => {
-        if (!x && !y) {
-          return;
-        }
-        let attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
+        let attack
+        attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 17);
         attack.flipX = true
-        attack.setVelocityX(-300);
+        attack.setVelocityX(-350);
         attack.body.allowGravity = false;
-        scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)
+        scenes.physics.add.overlap(player, [attack], scenes.gameOver, null, scenes)         
         Phaser.Actions.Call(this.laserGroup.getChildren(), playerAttack => {
           scenes.physics.add.overlap(playerAttack, [attack], scenes.disableEnemyAttack, null, scenes)
         })
-        this.time.addEvent({
-          delay: 1800,
-          repeat: 0,
-          callback: () => {
-            attack.destroy();
-          }
-        });
       }
     });
   }
 
   attackInterval() {
     this.timer = false
-    for (let i = 0; i < this.enemies.length; i++) {
-      if (this.enemies[i]) {
-        this.enemyAttackPosition(this.width * 0.9 + this.enemyAttackPositions, this.height * 0.735, this.player, this)
-      }
-      this.enemyAttackPositions += this.width * 3
-    }
     this.time.addEvent({
       delay: 10,
       repeat: 0,
