@@ -4,17 +4,17 @@ import EnemyAttackGroup from '../helper/enemyAttackGroup';
 import LaserGroup from '../helper/playerAttackGroup';
 
 var score = 0;
-let checkFunction = true
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
   }
-
+  
   init() {
     this.playerSpeed = 300;
     this.jumpSpeed = -600;
     this.height = this.scale.height
     this.width = this.scale.width
+    this.checkFunction = true
   };
 
   preload() {
@@ -86,7 +86,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    checkFunction = false
+    this.checkFunction = false
     this.scene.stop();
     this.scene.start('GameOverScene');
   }
@@ -233,7 +233,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   attackInterval() {
-    this.timer = false
+    this.timer = false 
     this.time.addEvent({
       delay: 10,
       repeat: 0,
@@ -241,12 +241,15 @@ export default class GameScene extends Phaser.Scene {
       callback: function () {
         Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
           child.active = false
-          if (checkFunction) {
-            setTimeout(() => {
+          this.time.addEvent({
+            delay: 500,
+            repeat: 0,
+            callbackScope: this,
+            callback: function () {
               this.timer = true
               child.disableBody(true, true)
-            }, 500);
-          }
+            }
+          })
         });
       }
     });
