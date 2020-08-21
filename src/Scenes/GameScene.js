@@ -234,7 +234,7 @@ export default class GameScene extends Phaser.Scene {
 
   enemyAttackPosition(x, y, player, scenes) {
     this.time.addEvent({
-      delay: 7300,
+      delay: 7450,
       loop: true,
       callback: () => {
         const attack = scenes.physics.add.sprite(x, y, 'enemyAttack', 0).setScale(0.6, 0.6);
