@@ -20,6 +20,10 @@ export default class Button extends Phaser.GameObjects.Container {
     this.add(this.text);
 
     this.button.on('pointerdown', () => {
+      const form = document.querySelectorAll('.form')
+      if (form) {
+        form.forEach(child => child.style.display = "none")
+      }
       this.scene.scene.start(targetScene);
     });
 
