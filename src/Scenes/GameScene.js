@@ -138,7 +138,7 @@ export default class GameScene extends Phaser.Scene {
     for (let i = 0; i < 30; i += 1) {
       enemyGroup.createEnemy(3000 + enemySpawnPosition, this.height * 0.5);
       this.enemyAttackPosition(3000 + enemySpawnPosition, this.height * 0.753, player, this);
-      enemySpawnPosition += this.width * 3.1;
+      enemySpawnPosition += this.width * 3.2;
     }
   }
 
@@ -261,7 +261,7 @@ export default class GameScene extends Phaser.Scene {
         Phaser.Actions.Call(this.laserGroup.getChildren(), child => {
           child.active = false;
           this.time.addEvent({
-            delay: 600,
+            delay: 500,
             repeat: 0,
             callbackScope: this,
             callback() {
