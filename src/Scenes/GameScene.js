@@ -13,6 +13,8 @@ export default class GameScene extends Phaser.Scene {
   init() {
     this.playerSpeed = 300;
     this.jumpSpeed = -600;
+    this.height = this.scale.height
+    this.width = this.scale.width
   };
 
   preload() {
@@ -93,11 +95,64 @@ export default class GameScene extends Phaser.Scene {
     return Math.random() * (max - min) + min;
   }
 
-  create() {
-    this.height = this.scale.height
-    this.width = this.scale.width
-    this.timer = true
+  generateCoins() {
+    for (let i = 0; i < 4; i++) {
+      this.coins.push(this.physics.add.staticGroup({
+        key: 'star',
+        repeat: 100,
+        setXY: { x: this.width * Math.random(1), y: this.height * this.randomInteger(0.5, 0.8), stepX: this.randomInteger(300, 1000) },
+        setScale: { x: 0.5, y: 0.5 }
+      }))
+    }
+  }
 
+  coinAnimation(coins) {
+    if (!this.anims.get('spin')) {
+      this.anims.create({
+        key: 'spin',
+        frames: this.anims.generateFrameNames('star', {
+          frames: [0, 1, 2, 3, 4, 5, 6, 7]
+        }),
+        frameRate: 5,
+        repeat: -1
+      });
+    }
+
+    for (let i = 0; i < coins.length; i++) {
+      Phaser.Actions.Call(coins[i].getChildren(), child => {
+        child.anims.play('spin');
+      });
+    }
+  }
+
+  createEnemies(enemyGroup, player) {
+    let enemySpawnPosition = 0
+    for (let i = 0; i < 30; i++) {
+      enemyGroup.createEnemy(3000 + enemySpawnPosition, this.height * 0.5)
+      this.enemyAttackPosition(3000 + enemySpawnPosition, this.height * 0.753, player, this)
+      enemySpawnPosition += this.width * 3.03
+    }
+  }
+
+  checkOverlap(laserGroup, enemyGroup, player, enemyAttackGroup, scene) {
+    Phaser.Actions.Call(laserGroup.getChildren(), laserChild => {
+      scene.backgroundRepeat(scene, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, laserChild)
+      Phaser.Actions.Call(enemyGroup.getChildren(), enemyChild => {
+        scene.backgroundRepeat(scene, this.width * 0.5, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, enemyChild)
+        scene.physics.add.overlap(laserChild, [enemyChild], scene.disableEnemyAttack, null, scene)
+        scene.physics.add.overlap(player, [enemyChild], scene.gameOver, null, scene)
+      });
+    });
+
+    Phaser.Actions.Call(laserGroup.getChildren(), laserChild => {
+      Phaser.Actions.Call(enemyAttackGroup.getChildren(), enemyAttackChild => {
+        scene.physics.add.overlap(laserChild, [enemyAttackChild], scene.disableEnemyAttack, null, scene)
+      })
+    });
+  }
+
+  create() {
+    this.timer = true
     this.add.image(this.width * 0.5, this.height * 0.3, 'sky').setScrollFactor(0).setScale(0.8, 0.7)
     this.backgroundRepeat(this, 0, this.height * 0.45, 'cloud1', 0.07, 0.5, 0.5, 0, 1)
     this.backgroundRepeat(this, 0, this.height, 'mountain', 0.25, 0.5, 0.5, 0, 1)
@@ -118,14 +173,8 @@ export default class GameScene extends Phaser.Scene {
     this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, this.player)
     this.coins = []
 
-    for (let i = 0; i < 4; i++) {
-      this.coins.push(this.physics.add.staticGroup({
-        key: 'star',
-        repeat: 100,
-        setXY: { x: this.width * Math.random(1), y: this.height * this.randomInteger(0.5, 0.8), stepX: this.randomInteger(300, 1000) },
-        setScale: { x: 0.5, y: 0.5 }
-      }))
-    }
+    this.generateCoins()
+    this.coinAnimation(this.coins)
 
     if (!this.anims.get('walking')) {
       this.anims.create({
@@ -135,17 +184,6 @@ export default class GameScene extends Phaser.Scene {
         }),
         frameRate: 12,
         yoyo: true,
-        repeat: -1
-      });
-    }
-    
-    if (!this.anims.get('spin')) {
-      this.anims.create({
-        key: 'spin',
-        frames: this.anims.generateFrameNames('star', {
-          frames: [0, 1, 2, 3, 4, 5, 6, 7]
-        }),
-        frameRate: 5,
         repeat: -1
       });
     }
@@ -160,41 +198,14 @@ export default class GameScene extends Phaser.Scene {
         repeat: -1
       });
     }
-    
-    for (let i = 0; i < this.coins.length; i++) {
-      Phaser.Actions.Call(this.coins[i].getChildren(), child => {
-        child.anims.play('spin');
-      });
-    }
-    
+
     this.laserGroup = new LaserGroup(this);
     this.enemyGroup = new EnemyGroup(this)
     this.enemyAttackGroup = new EnemyAttackGroup(this)
     this.enemySpawnPosition = 0
-    this.enemies = []
 
-    for (let i = 0; i < 30; i++) {
-      this.enemyGroup.createEnemy(3000 + this.enemySpawnPosition, this.height * 0.5)
-      this.enemyAttackPosition(3000 + this.enemySpawnPosition, this.height * 0.753, this.player, this)
-      this.enemies.push(true)
-      this.enemySpawnPosition += this.width * 3.03
-    }
-
-    Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
-      this.backgroundRepeat(this, 0, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, laserChild)
-      this.physics.add.overlap(laserChild, [this.enemyAttack], this.disableEnemyAttack, null, this)
-      Phaser.Actions.Call(this.enemyGroup.getChildren(), enemyChild => {
-        this.backgroundRepeat(this, this.width * 0.5, this.height, 'ground2', 1.25, 0.45, 0.45, 0, 1, enemyChild)
-        this.physics.add.overlap(laserChild, [enemyChild], this.disableEnemyAttack, null, this)
-        this.physics.add.overlap(this.player, [enemyChild], this.gameOver, null, this)
-      });
-    });
-
-    Phaser.Actions.Call(this.laserGroup.getChildren(), laserChild => {
-      Phaser.Actions.Call(this.enemyAttackGroup.getChildren(), enemyAttackChild => {
-        this.physics.add.overlap(laserChild, [enemyAttackChild], this.disableEnemyAttack, null, this)
-      })
-    });
+    this.createEnemies(this.enemyGroup, this.player)
+    this.checkOverlap(this.laserGroup, this.enemyGroup, this.player, this.enemyAttackGroup, this)
       
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     this.physics.add.overlap(this.player, [this.coins[0], this.coins[1], this.coins[2], this.coins[3]], this.collectStar, null, this)
