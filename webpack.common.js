@@ -1,3 +1,4 @@
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   module: {
@@ -25,6 +26,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(mp3|ogg)$/,
+        loader: 'file-loader',
       },
     ],
   },

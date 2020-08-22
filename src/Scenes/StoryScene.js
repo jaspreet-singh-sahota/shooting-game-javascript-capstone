@@ -1,6 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
-// import Dom from '../Objects/dom';
+import logoBg from '../../assets/images/logo-bg.png';
 // eslint-disable-next-line no-undef
 export default class StoryScene extends Phaser.Scene {
   constructor() {
@@ -8,7 +8,7 @@ export default class StoryScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bg', '../../assets/images/logo-bg.png');
+    this.load.image('bg', logoBg);
   }
 
   create() {

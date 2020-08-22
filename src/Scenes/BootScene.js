@@ -1,4 +1,5 @@
 import 'phaser';
+import logo from '../../assets/images/logo-bg.png';
 // eslint-disable-next-line no-undef
 export default class BootScene extends Phaser.Scene {
   constructor() {
@@ -6,7 +7,7 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('logo', '../../assets/images/logo-bg.png', { frameWidth: 497, frameHeight: 281 });
+    this.load.spritesheet('logo', logo , { frameWidth: 497, frameHeight: 281 });
   }
 
   create() {

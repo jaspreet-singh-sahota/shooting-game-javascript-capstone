@@ -1,5 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
+import options from '../../assets/images/options.png';
 
 // eslint-disable-next-line no-undef
 export default class OptionsScene extends Phaser.Scene {
@@ -8,7 +9,7 @@ export default class OptionsScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('optionBackground', '../../assets/images/options.png');
+    this.load.image('optionBackground', options);
   }
 
   create() {

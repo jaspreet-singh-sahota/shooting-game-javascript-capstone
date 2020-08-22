@@ -1,6 +1,7 @@
 import 'phaser';
 import API from '../Objects/api';
 import Button from '../Objects/Button';
+import score from '../../assets/images/score.png';
 /* eslint-disable no-undef */
 export default class LeaderBoardScene extends Phaser.Scene {
   constructor() {
@@ -8,7 +9,7 @@ export default class LeaderBoardScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('leaderBoardBackGround', '../../assets/images/score.png');
+    this.load.image('leaderBoardBackGround', score);
   }
 
   async create() {

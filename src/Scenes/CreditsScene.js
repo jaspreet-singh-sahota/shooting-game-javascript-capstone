@@ -1,5 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
+import creditBackground from '../../assets/images/options.png';
 
 export default class CreditsScene extends Phaser.Scene {
   constructor() {
@@ -7,7 +8,7 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('creditBackground', '../../assets/images/options.png');
+    this.load.image('creditBackground', creditBackground);
   }
 
   create() {

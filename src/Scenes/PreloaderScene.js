@@ -1,4 +1,9 @@
 import 'phaser';
+import blueButton1 from '../../assets/ui/blue_button02.png';
+import blueButton2 from '../../assets/ui/blue_button03.png';
+import box from '../../assets/ui/grey_box.png';
+import checkedBox from '../../assets/ui/blue_boxCheckmark.png';
+import bgMusic from '../../assets/titleTheme.mp3';
 // eslint-disable-next-line no-undef
 export default class PreloaderScene extends Phaser.Scene {
   constructor() {
@@ -13,11 +18,11 @@ export default class PreloaderScene extends Phaser.Scene {
     const width = this.scale.width * 0.5;
     const height = this.scale.height * 0.5;
     this.logo = this.add.sprite(width, height, 'logo', 0).setScale(1.61, 2.17);
-    this.load.image('blueButton1', '../../assets/ui/blue_button02.png');
-    this.load.image('blueButton2', '../../assets/ui/blue_button03.png');
-    this.load.image('box', '../../assets/ui/grey_box.png');
-    this.load.image('checkedBox', '../../assets/ui/blue_boxCheckmark.png');
-    this.load.audio('bgMusic', '../../assets/titleTheme.mp3');
+    this.load.image('blueButton1', blueButton1);
+    this.load.image('blueButton2', blueButton2);
+    this.load.image('box', box);
+    this.load.image('checkedBox', checkedBox);
+    this.load.audio('bgMusic', bgMusic);
 
     if (!this.anims.get('logo')) {
       this.anims.create({

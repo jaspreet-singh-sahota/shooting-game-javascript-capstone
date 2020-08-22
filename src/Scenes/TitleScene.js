@@ -1,5 +1,6 @@
 import 'phaser';
 import Button from '../Objects/Button';
+import titleBg from '../../assets/images/title-bg.png';
 /* eslint-disable no-undef */
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -7,7 +8,7 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bg', '../../assets/images/title-bg.png');
+    this.load.image('bg', titleBg);
   }
 
   create() {

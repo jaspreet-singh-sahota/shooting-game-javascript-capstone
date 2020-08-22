@@ -2,6 +2,8 @@ import Button from '../Objects/Button';
 import API from '../Objects/api';
 import Dom from '../Objects/dom';
 import LocalStorage from '../Objects/localStorage';
+import loadingScreenImgRight from '../../assets/images/gameover1.png';
+import loadingScreenImgLeft from '../../assets/images/gameover2.png';
 /* eslint-disable no-undef */
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
@@ -9,8 +11,8 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('loadingScreenImgRight', '../../assets/images/gameover1.png');
-    this.load.image('loadingScreenImgLeft', '../../assets/images/gameover2.png');
+    this.load.image('loadingScreenImgRight', loadingScreenImgRight);
+    this.load.image('loadingScreenImgLeft', loadingScreenImgLeft);
     // eslint-disable-next-line no-unused-expressions
     API;
   }
