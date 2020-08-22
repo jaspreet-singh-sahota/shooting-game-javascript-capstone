@@ -33,7 +33,7 @@ const Dom = (() => {
           p.innerHTML = 'Name can\'t be blank';
         }
       };
-    }, 100);
+    }, 1000);
   }
 
   return { form, addButtonFunctionality };
