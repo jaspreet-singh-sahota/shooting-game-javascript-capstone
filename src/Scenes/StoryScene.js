@@ -8,7 +8,7 @@ export default class StoryScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bg', 'assets/images/logo-bg.png');
+    this.load.image('bg', '../../assets/images/logo-bg.png');
   }
 
   create() {

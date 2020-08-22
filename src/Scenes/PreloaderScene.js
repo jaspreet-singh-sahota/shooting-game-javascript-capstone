@@ -13,11 +13,11 @@ export default class PreloaderScene extends Phaser.Scene {
     const width = this.scale.width * 0.5;
     const height = this.scale.height * 0.5;
     this.logo = this.add.sprite(width, height, 'logo', 0).setScale(1.61, 2.17);
-    this.load.image('blueButton1', 'assets/ui/blue_button02.png');
-    this.load.image('blueButton2', 'assets/ui/blue_button03.png');
-    this.load.image('box', 'assets/ui/grey_box.png');
-    this.load.image('checkedBox', 'assets/ui/blue_boxCheckmark.png');
-    this.load.audio('bgMusic', 'assets/titleTheme.mp3');
+    this.load.image('blueButton1', '../../assets/ui/blue_button02.png');
+    this.load.image('blueButton2', '../../assets/ui/blue_button03.png');
+    this.load.image('box', '../../assets/ui/grey_box.png');
+    this.load.image('checkedBox', '../../assets/ui/blue_boxCheckmark.png');
+    this.load.audio('bgMusic', '../../assets/titleTheme.mp3');
 
     if (!this.anims.get('logo')) {
       this.anims.create({

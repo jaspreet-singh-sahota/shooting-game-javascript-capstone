@@ -8,7 +8,7 @@ export default class LeaderBoardScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('leaderBoardBackGround', 'assets/images/score.png');
+    this.load.image('leaderBoardBackGround', '../../assets/images/score.png');
   }
 
   async create() {

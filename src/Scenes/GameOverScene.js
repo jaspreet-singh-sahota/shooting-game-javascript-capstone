@@ -9,8 +9,8 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('loadingScreenImgRight', 'assets/images/gameover1.png');
-    this.load.image('loadingScreenImgLeft', 'assets/images/gameover2.png');
+    this.load.image('loadingScreenImgRight', '../../assets/images/gameover1.png');
+    this.load.image('loadingScreenImgLeft', '../../assets/images/gameover2.png');
     // eslint-disable-next-line no-unused-expressions
     API;
   }
