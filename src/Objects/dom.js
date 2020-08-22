@@ -20,7 +20,7 @@ const Dom = (() => {
     const index = (form.length) - 1;
     button = document.querySelectorAll('.submit')[index];
     form = document.querySelectorAll('.form')[index];
-    input = document.querySelectorAll('.input')[index]
+    input = document.querySelectorAll('.input')[index];
     p = document.querySelectorAll('p')[index];
     setTimeout(() => {
       button.onclick = () => {
@@ -32,7 +32,7 @@ const Dom = (() => {
         } else {
           p.innerHTML = 'Name can\'t be blank';
         }
-      }; 
+      };
     }, 100);
   }
 

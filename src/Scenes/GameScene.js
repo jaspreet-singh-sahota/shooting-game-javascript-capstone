@@ -29,7 +29,7 @@ export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
   }
-  
+
   init() {
     this.score = 0;
     this.playerSpeed = 290;
@@ -111,7 +111,7 @@ export default class GameScene extends Phaser.Scene {
 
   gameOver() {
     this.scene.stop();
-    this.scene.start('GameOverScene');       
+    this.scene.start('GameOverScene');
   }
 
   // eslint-disable-next-line class-methods-use-this
