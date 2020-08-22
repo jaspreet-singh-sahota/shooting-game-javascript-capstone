@@ -115,6 +115,7 @@ export default class GameScene extends Phaser.Scene {
       delay: 60,
       callback: () => {
         if (!this.isGameOver) {
+          this.isGameOver = true;
           this.scene.stop();
           this.scene.start('GameOverScene');
         }
