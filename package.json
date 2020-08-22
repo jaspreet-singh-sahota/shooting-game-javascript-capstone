@@ -35,7 +35,6 @@
     "@babel/plugin-transform-regenerator": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
-    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.2.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -54,12 +53,15 @@
     "stylelint-scss": "^3.17.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.9"
   },
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "phaser": "^3.20.1"
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "phaser": "^3.20.1",
+    "terser-webpack-plugin": "^3.0.8"
   }
 }
