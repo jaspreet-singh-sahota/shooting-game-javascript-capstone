@@ -18,7 +18,8 @@ const Dom = (() => {
     let button = document.querySelectorAll('.submit');
     let p = document.querySelectorAll('p');
     const index = (form.length) - 1;
-    button = document.querySelectorAll('.submit')[index];
+    const indexButton = (button.length) - 1;
+    button = document.querySelectorAll('.submit')[indexButton];
     form = document.querySelectorAll('.form')[index];
     input = document.querySelectorAll('.input')[index];
     p = document.querySelectorAll('p')[index];

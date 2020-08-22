@@ -36,6 +36,7 @@ export default class GameScene extends Phaser.Scene {
     this.jumpSpeed = -600;
     this.height = this.scale.height;
     this.width = this.scale.width;
+    this.isGameOver = false;
   }
 
   preload() {
@@ -110,8 +111,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.scene.stop();
-    this.scene.start('GameOverScene');
+    this.time.addEvent({
+      delay: 60,
+      callback: () => {
+        if (!this.isGameOver) {
+          this.scene.stop();
+          this.scene.start('GameOverScene');
+        }   
+      },
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
