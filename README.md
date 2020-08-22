@@ -40,8 +40,11 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-* [Built With](#built-with)
+* [Installation](#Installation)
 * [Control's](#CONTROL'S)
+* [Game Design](#Game-Design)
+* [Journey](#Journey)
+* [Built With](#built-with)
 * [Future Updates](#future-updates)
 * [Contact](#Authors)
 * [Acknowledgements](#acknowledgements)
@@ -66,7 +69,7 @@ Enjoy playing it and try to break the high score 🔥
 
 ## Live Link (Netlify)
 
-[Click Here](https://jassi-shooting-game-javascript-capstone.netlify.app/)
+[Click here to the game play](https://naruto-shippuden-shooting-game.netlify.app/)
 
 
 <!-- CONTROL'S -->
@@ -79,6 +82,8 @@ Enjoy playing it and try to break the high score 🔥
 - (→) right arrow key => Move right
 - ( ↑ ) up arrow key or Space bar key => To jump
 - ( X ) key => Fire Rasengan
+
+<!-- Installation -->
 
 ## Install
 
@@ -109,8 +114,10 @@ Now it will successfully open 'Naruto Shippuden' locally in your browser.
 - ES6
 - NPM
 - Github
-- [Netlify](https://www.heroku.com/) for the deployment
+- [Netlify](https://naruto-shippuden-shooting-game.netlify.app/) for the deployment
 - Leaderboard API service
+
+<!-- Game-Design -->
 
 ## Design
 
@@ -171,6 +178,8 @@ The game uses high-quality sprites to bring all scenes to life. User can expect 
 
 </div>
 
+<!-- Journey  -->
+
 ## Game development
 
 | DAYS  |              OBJECTIVE               |                                                                                                                                                                                  DESCRIPTION                                                                                                                                                                                   |                                                                                                                                 OUTCOME                                                                                                                                  | STATUS  |
@@ -179,7 +188,6 @@ The game uses high-quality sprites to bring all scenes to life. User can expect 
 | Day 2 |             Game Logic             |              During the 1st half, I watched 2-3  tutorials For a better understanding of Phaser 3. After gaining the basic knowledge of how things work in Phaser 3. I started working on the game logic. During the 2nd half, I kept on working on the logical part.              |                                            By the end of the day, I had a fully functional game that used Webpack to bundle all files (HTML, CSS,  JavaScript ) to start the game.                                             | &#9745; |
 | Day 3 |          Game Template            | After completing the game logic all that is left is to work on the preloader and menu for the game. For that, I used the template provided by the Microverse. I followed the instruction given in the template while playing around with the code to implement some of my ideas. I completed the scoring system by using the provided API (Leaderboard API service) |                                                      By the end of the day, I had a fully working game that ran on my local environment. I still had some styling to do, but in general, I had a working project.                                                       | &#9745; |
 | Day 4 |   Testing, Styling, and Deployment   |                                                I added the final design details to the game, like background images and personalized logo. I refactored my code to be able to test it using Jest. I made the tests for the modules I created to add functionality to the Phaser module. Finally, I deployed the app to Netlify.                                                 | By the end of the day, I had a complete project that was accessible everywhere through Netlify hosting. I separated the Dom and logic files and created tests for the methods I coded and implemented, and everything was up and running. | &#9745; |
-|
 
 <!-- future-updates -->
 
