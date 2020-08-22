@@ -21,7 +21,7 @@ const Dom = (() => {
     const indexButton = (button.length) - 1;
     button = document.querySelectorAll('.submit')[indexButton];
     form = document.querySelectorAll('.form')[index];
-    input = document.querySelectorAll('.input')[index];
+    input = document.querySelectorAll('.input')[indexButton];
     p = document.querySelectorAll('p')[index];
     setTimeout(() => {
       button.onclick = () => {
