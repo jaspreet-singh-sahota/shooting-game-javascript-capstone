@@ -136,7 +136,7 @@ export default class GameScene extends Phaser.Scene {
         setXY: {
           x: this.width * Math.random(1),
           y: this.height * this.randomInteger(0.5, 0.8),
-          stepX: this.randomInteger(300, 1000),
+          stepX: this.randomInteger(200, 1000),
         },
         setScale: { x: 0.5, y: 0.5 },
       }));

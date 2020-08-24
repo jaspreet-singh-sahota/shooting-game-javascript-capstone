@@ -40,10 +40,12 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-* [Installation](#Installation)
+* [Installation](#installation)
 * [Control's](#CONTROL'S)
-* [Game Design](#Game-Design)
-* [Journey](#Journey)
+* [Live Link](#Live-Link-(Netlify))
+* [Game Design](#game-design)
+* [Game Play](#game-play)
+* [Journey](#Game-development)
 * [Built With](#built-with)
 * [Future Updates](#future-updates)
 * [Contact](#Authors)
@@ -67,11 +69,6 @@ For each coin you collect +10 points will be added to your score. In the end, yo
 
 Enjoy playing it and try to break the high score 🔥
 
-## Live Link (Netlify)
-
-[Click here to the game play](https://naruto-shippuden-shooting-game.netlify.app/)
-
-
 <!-- CONTROL'S -->
 
 ## How to play
@@ -83,9 +80,17 @@ Enjoy playing it and try to break the high score 🔥
 - ( ↑ ) up arrow key or Space bar key => To jump
 - ( X ) key => Fire Rasengan
 
-<!-- Installation -->
+<p align="center"> <img src="https://user-images.githubusercontent.com/55361440/90991712-eb2c7280-e5c8-11ea-9d02-0ee7cbd535a8.gif" alt="Naruto Shooting Game" width="100%"> </p>
 
-## Install
+<!-- Live Link (Netlify) -->
+
+## Live Link (Netlify)
+
+[Click here to the game play](https://naruto-shippuden-shooting-game.netlify.app/)
+
+<!-- INSTALLATION -->
+
+## Installation
 
 To run 'Naruto Shippuden' locally, clone the repository, navigate to it's containing directory.
 
@@ -117,9 +122,9 @@ Now it will successfully open 'Naruto Shippuden' locally in your browser.
 - [Netlify](https://naruto-shippuden-shooting-game.netlify.app/) for the deployment
 - Leaderboard API service
 
-<!-- Game-Design -->
+<!-- Game Design -->
 
-## Design
+## Game Design
 
 The game uses high-quality sprites to bring all scenes to life. User can expect well-designed animations and map textures. I used [this](https://pipoya.itch.io/) sprite pack for animations and for the parallax background effect.
 
@@ -145,7 +150,6 @@ The game uses high-quality sprites to bring all scenes to life. User can expect 
 - Role: Natuto's Attack </br>
 - Damage: 100 </br>
 - Attack Name: Rasengan </br>
-- Feature: Cancel out enemy's attack </br>
 
 </div>
 
@@ -178,7 +182,35 @@ The game uses high-quality sprites to bring all scenes to life. User can expect 
 
 </div>
 
-<!-- Journey  -->
+<!-- game play -->
+
+## Game Play 
+
+### Loading Screen
+
+![Peek 2020-08-24 04-05](https://user-images.githubusercontent.com/55361440/90990692-0f845100-e5c1-11ea-8e8d-e68d1ebc1c2d.gif)
+
+### Enable/disable Audio
+
+![Peek 2020-08-24 04-07](https://user-images.githubusercontent.com/55361440/90990696-127f4180-e5c1-11ea-81db-74151190dcb9.gif)
+
+### Credits
+
+![Peek 2020-08-24 04-34](https://user-images.githubusercontent.com/55361440/90990970-317ed300-e5c3-11ea-8028-602bb59937d4.gif)
+
+### Game-Play
+
+<p align="center"> <img src="https://user-images.githubusercontent.com/55361440/90991712-eb2c7280-e5c8-11ea-9d02-0ee7cbd535a8.gif" alt="Naruto Shooting Game" width="100%"> </p>
+
+### form 
+
+![Peek 2020-08-24 04-16](https://user-images.githubusercontent.com/55361440/90990699-21fe8a80-e5c1-11ea-8f95-b46d959a0d42.gif)
+
+### Leaderboard 
+
+![Peek 2020-08-24 04-14](https://user-images.githubusercontent.com/55361440/90990698-1f039a00-e5c1-11ea-9fb8-52510e350eea.gif)
+
+<!-- Game development -->
 
 ## Game development
 
