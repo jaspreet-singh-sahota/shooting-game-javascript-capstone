@@ -86,7 +86,7 @@ Enjoy playing it and try to break the high score 🔥
 
 ## Live Link (Netlify)
 
-[Click here to the game play](https://naruto-shippuden-shooting-game.netlify.app/)
+[Click here to play the game](https://naruto-shippuden-shooting-game.netlify.app/)
 
 <!-- INSTALLATION -->
 
