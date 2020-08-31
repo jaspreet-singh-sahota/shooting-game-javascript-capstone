@@ -92,9 +92,9 @@ Enjoy playing it and try to break the high score 🔥
 
 ## Installation
 
-To run 'Naruto Shippuden' locally, clone the repository, navigate to it's containing directory.
+To run 'Naruto Shippuden Game' locally, clone the repository, navigate to it's containing directory.
 
-#### Follow these commands step by step:-
+#### Follow these commands step by step:-  
 
 ```bash
 git@github.com:jaspreet-singh-sahota/shooting-game-javascript-capstone.git
